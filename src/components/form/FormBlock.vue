@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log(this.v$);
+      console.log(this.v$.name.$errors);
     }
   }
 }

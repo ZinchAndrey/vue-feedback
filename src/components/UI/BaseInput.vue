@@ -2,12 +2,12 @@
   <div class="input__wrapper">
     {{ label }}
     <label class="input__label">
-      <input class="input" 
+      <input class="input" :class="{'input--error': errors && !!errors.length}" 
         :type="type" 
         :placeholder="placeholder"
         :value="modelValue"
         @input="updateValue">
-      <span v-for="error of errors" :key="error.$uid" class="input__error">{{ error.$message }}</span>
+      <span v-for="error of errors" :key="error.$uid" class="input__error-text">{{ error.$message }}</span>
       <inline-svg class="input__icon" :src="iconSrc" />
     </label>
   </div>
@@ -42,7 +42,6 @@ export default {
       type: String,
       default: ''
     }
-    // функция валидации 
   },
   data() {
     return {
@@ -88,11 +87,15 @@ export default {
   &:hover,
   &:focus {
     box-shadow: 0px 2px 6px 0px rgba(19, 18, 66, 0.3);
+    outline: none;
   }
 
-  &:focus {
+  &:not(&--error):focus {
     border-color: var(--main-theme-color);
-    outline: none;
+  }
+
+  &--error {
+    border-color: var(--error-color);
   }
 }
 
@@ -103,7 +106,7 @@ export default {
   transform: translate(50%, -50%);
 }
 
-.input__error {
+.input__error-text {
   font-size: 12px;
   line-height: 120%;
   color: var(--error-color);
@@ -114,7 +117,7 @@ export default {
   transform: translateY(calc(100% + 5px));
 }
 
-.input__error + .input__error {
+.input__error-text + .input__error-text {
   transform: translateY(calc(200% + 5px))
 }
 </style>
