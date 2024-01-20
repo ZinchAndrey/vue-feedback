@@ -7,13 +7,14 @@
         :placeholder="placeholder"
         :value="modelValue"
         @input="updateValue">
-      <span class="input__error">{{ error }}</span>
+      <span v-for="error of errors" :key="error.$uid" class="input__error">{{ error.$message }}</span>
       <inline-svg class="input__icon" :src="iconSrc" />
     </label>
   </div>
 </template>
 
 <script>
+
 export default {
   emits: ['update:modelValue'],
   props: {
@@ -33,9 +34,9 @@ export default {
       type: String,
       default: ''
     },
-    error: {
-      type: String,
-      default: 'Заполните поле'
+    errors: {
+      type: Array,
+      required: false,
     },
     modelValue: {
       type: String,
@@ -111,5 +112,9 @@ export default {
   left: 20px;
   bottom: 0;
   transform: translateY(calc(100% + 5px));
+}
+
+.input__error + .input__error {
+  transform: translateY(calc(200% + 5px))
 }
 </style>
