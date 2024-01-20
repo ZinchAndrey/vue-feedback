@@ -3,6 +3,9 @@
 ## Заметки
 Можно использовать динамический компонент <component> + в форме <keep-alive>
 
+**???** Спросить про loader для svg файлов
+Временно использую папку public вместо assets 
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup

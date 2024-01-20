@@ -62,14 +62,14 @@ export default {
     }
 
     &--primary {
-      color: var(--alt-btn-color);
-      background-color: var(--main-btn-color);
-      border-color: var(--main-btn-color);
+      color: var(--alt-theme-color);
+      background-color: var(--main-theme-color);
+      border-color: var(--main-theme-color);
     }
 
     &--outline {
-      color: var(--main-btn-color);
-      background-color: var(--alt-btn-color);
+      color: var(--main-theme-color);
+      background-color: var(--alt-theme-color);
     }
 
     &:disabled {
