@@ -24,10 +24,14 @@
         <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
 
       <base-input 
-        type="tel" 
+        type="text" 
         placeholder="Phone" 
         label="Phone" 
-        iconSrc="/img/phone-icon.svg" />
+        iconSrc="/img/phone-icon.svg"
+        maskValue="{+7} (000) 000-00-00"
+        :errors="v$.phone.$errors"
+        v-model="phone"
+        @blur="v$.phone.$touch()"/>
       <!-- Маску и length наложить  -->
       <!-- https://vuejs-tips.github.io/vue-the-mask/  -->
       <!-- https://www.npmjs.com/package/vue-input-mask -->
@@ -36,6 +40,7 @@
         type="text" 
         placeholder="Company" 
         label="Company" 
+        v-model="company"
         iconSrc="/img/company-icon.svg"/>
     </div>
 
@@ -45,7 +50,7 @@
 
 <script>
 import { useVuelidate } from '@vuelidate/core'
-import { required, helpers, email } from '@vuelidate/validators'
+import { required, helpers, email, minLength } from '@vuelidate/validators'
 
 export default {
   setup() {
@@ -55,6 +60,8 @@ export default {
     return {
       name: '',
       email: '',
+      phone: '',
+      company: ''
     }
   },
   validations() {
@@ -64,6 +71,10 @@ export default {
         required: helpers.withMessage('Введите email', required),
         email: helpers.withMessage('Введите корректный email', email),
         $lazy: true
+      },
+      phone: {
+        required: helpers.withMessage('Введите номер', required),
+        minLength:helpers.withMessage('Введите номер в указанном формате', minLength(18))
       }
     }
   },

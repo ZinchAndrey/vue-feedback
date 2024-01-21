@@ -2,12 +2,16 @@
   <div class="input__wrapper">
     {{ label }}
     <label class="input__label">
-      <input class="input" :class="{'input--error': errors && !!errors.length}" 
+   
+      <input 
+        class="input" :class="{'input--error': errors && !!errors.length}" 
         :type="type" 
         :placeholder="placeholder"
         :value="modelValue"
+        v-imask="maskValue ? mask : ''"
         @input="updateValue"
         @blur="blurField">
+
       <span v-for="error of errors" :key="error.$uid" class="input__error-text">{{ error.$message }}</span>
       <inline-svg class="input__icon" :src="iconSrc" />
     </label>
@@ -15,6 +19,7 @@
 </template>
 
 <script>
+import { IMaskDirective } from 'vue-imask';
 
 export default {
   emits: ['update:modelValue', 'blur'],
@@ -42,10 +47,18 @@ export default {
     modelValue: {
       type: String,
       default: ''
+    },
+    maskValue: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
+      mask: {
+        mask: this.maskValue,
+        lazy: true
+        },
     }
   },
   methods: {
@@ -54,8 +67,11 @@ export default {
     },
     blurField() {
       this.$emit('blur');
+    },
+  },
+  directives: {
+      imask: IMaskDirective
     }
-  }
 }
 </script>
 
