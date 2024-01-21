@@ -6,7 +6,8 @@
         :type="type" 
         :placeholder="placeholder"
         :value="modelValue"
-        @input="updateValue">
+        @input="updateValue"
+        @blur="blurField">
       <span v-for="error of errors" :key="error.$uid" class="input__error-text">{{ error.$message }}</span>
       <inline-svg class="input__icon" :src="iconSrc" />
     </label>
@@ -16,7 +17,7 @@
 <script>
 
 export default {
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'blur'],
   props: {
     type: {
       type: String,
@@ -50,6 +51,9 @@ export default {
   methods: {
     updateValue(evt) {
       this.$emit('update:modelValue', evt.target.value);
+    },
+    blurField() {
+      this.$emit('blur');
     }
   }
 }
