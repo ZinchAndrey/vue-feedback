@@ -60,6 +60,8 @@
         v-model:checked="checkboxActive"/>
         {{ checkboxActive }} -->
   </div>
+  selectedServiceItems: {{ selectedServiceItems }}
+
 </template>
 
 <script>
@@ -84,7 +86,7 @@ export default {
       email: '',
       phone: '',
       company: '',
-      selectedServiceItems: ['development'],
+      selectedServiceItems: [],
       serviceItems: [
         {
           label: 'Development',

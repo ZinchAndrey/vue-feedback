@@ -1,13 +1,7 @@
 <template>
-  <label class="checkbox" :class="{'checkbox__active': checked}" :for="id">
-    <input 
-      class="checkbox__input visually-hidden" 
-      type="checkbox" 
-      :value="value"
-      :name="name"
-      :id="id"
-      @input="updateValue"
-      :checked="checked">
+  <label class="checkbox" :class="{ 'checkbox__active': checked }" :for="id">
+    <input class="checkbox__input visually-hidden" type="checkbox" :value="value" :name="name" :id="id"
+      @input="updateValue" :checked="checked">
     <div class="checkbox__icon-wrapper">
       <inline-svg class="checkbox__icon" :src="iconSrc" />
 
@@ -20,7 +14,7 @@
 
 <script>
 export default {
-  emits: ['update:checked'],
+  emits: ['update:checked', 'updateCheckboxItem'],
   props: {
     name: {
       type: String,
@@ -49,7 +43,16 @@ export default {
   },
   methods: {
     updateValue(evt) {
-      this.$emit('update:checked', evt.target.checked);
+      this.$emit('updateCheckboxItem', 
+        { 
+          id: this.id,
+          value: this.value,
+          checked: evt.target.checked 
+        }
+      );
+
+      // это если не чекбокс групп, а просто чекбокс 
+      // this.$emit('update:checked', evt.target.checked);
     }
   }
 }
@@ -86,7 +89,7 @@ $main-theme-color: #4a3aff;
     border-radius: 50%;
     background: rgba($main-theme-color, 0.15);
     box-shadow: 0px 0px 10px 0px rgba(74, 58, 255, 0.50);
-  
+
   }
 
   &__icon {

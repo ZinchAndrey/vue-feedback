@@ -6,7 +6,8 @@
     :name="name"
     :value="item.value"
     :id="item.id"
-    :checked="checkedItems.includes(item.value)"/>
+    :checked="checkedItems.includes(item.value)"
+    @updateCheckboxItem="updateCheckedItems"/>
 </template>
 
 <script>
@@ -33,6 +34,19 @@ export default {
   },
   data() {
     return {
+    }
+  },
+  methods: {
+    updateCheckedItems(itemData) {
+      const checkedItems = [...this.checkedItems];
+
+      if (itemData.checked) {
+        checkedItems.push(itemData.value);
+      } else {
+        checkedItems.splice(checkedItems.indexOf(itemData.value), 1);
+      }
+
+      this.$emit('update:checkedItems', checkedItems);
     }
   }
 }
