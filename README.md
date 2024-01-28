@@ -8,6 +8,10 @@
 
 Спросить про маску телефона, какую использует
 
+codepen с шаговым прогресс-баром https://codepen.io/atakan/pen/nPOZZR
+
+Уточнить, что лучше записывать в массив выбранных чекбоксов (value или id?)
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup

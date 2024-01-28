@@ -70,8 +70,8 @@ export default {
     },
   },
   directives: {
-      imask: IMaskDirective
-    }
+    imask: IMaskDirective
+  }
 }
 </script>
 
@@ -126,7 +126,7 @@ export default {
   transform: translate(50%, -50%);
 }
 
-.input__error-text {
+.input__error-text:nth-child(n) {
   font-size: 12px;
   line-height: 120%;
   color: var(--error-color);

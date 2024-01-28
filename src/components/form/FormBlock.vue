@@ -46,22 +46,75 @@
 
     <base-button type="submit" label="Отправить" />
   </form>
+
+  <div class="form__wrapper">
+    <checkbox-group
+      name="service"
+      :items="serviceItems"
+      v-model:checkedItems="selectedServiceItems"/>
+      <!-- <checkbox-item
+        value="Test"
+        name="Test name"
+        id="01"
+        label="Test"
+        v-model:checked="checkboxActive"/>
+        {{ checkboxActive }} -->
+  </div>
 </template>
 
 <script>
+import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
+// import CheckboxItem from '@/components/checkbox/CheckboxItem.vue'
+
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
 
 export default {
+  components: {
+    // CheckboxItem
+    CheckboxGroup
+  },
   setup() {
     return { v$: useVuelidate() }
   },
   data() {
     return {
+      currentScreenIndex: 0,
       name: '',
       email: '',
       phone: '',
-      company: ''
+      company: '',
+      selectedServiceItems: ['development'],
+      serviceItems: [
+        {
+          label: 'Development',
+          iconSrc: '/img/development-icon.svg',
+          value: 'development',
+          id: 's1',
+          isCheckboxActive: false,
+        },
+        {
+          label: 'Web Design',
+          iconSrc: '/img/web-design-icon.svg',
+          value: 'web design',
+          id: 's2',
+          isCheckboxActive: false,
+        },
+        {
+          label: 'Marketing',
+          iconSrc: '/img/marketing-icon.svg',
+          value: 'marketing',
+          id: 's3',
+          isCheckboxActive: false,
+        },
+        {
+          label: 'Other',
+          iconSrc: '/img/other-icon.svg',
+          value: 'other',
+          id: 's4',
+          isCheckboxActive: false,
+        },
+      ],
     }
   },
   validations() {
@@ -79,8 +132,24 @@ export default {
     }
   },
   methods: {
+    setNextScreen() {
+      this.currentScreenIndex += 1;
+    },
+    setPrevScreen() {
+      if (this.currentScreenIndex > 0) {
+        this.currentScreenIndex -= 1;
+      }
+    },
     submitForm() {
-      console.log(this.v$);
+      this.setNextScreen();
+      this.v$.$touch()
+      // console.log(this.v$);
+      if (this.v$.$invalid) {
+        return
+      }
+
+      const { name, email, phone, company } = this;
+      console.log(name, email, phone, company);
     }
   }
 }
@@ -90,7 +159,7 @@ export default {
 .form {
   &__wrapper {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 1fr 1fr;
     gap: 45px 30px;
     margin-bottom: 50px;
   }

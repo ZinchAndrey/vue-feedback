@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 :root {
-  --text-color: #170F49;
-  --sub-text-color: #6F6C90;
+  --text-color: #170f49;
+  --sub-text-color: #6f6c90;
   --alt-text-color: #fff;
   --error-color: rgb(216, 45, 45);
 
-  --main-theme-color: #4A3AFF;
-  --alt-theme-color:#fff;
+  --main-theme-color: #4a3aff;
+  --alt-theme-color: #fff;
 
-  --border-color: #EFF0F6;
+  --border-color: #eff0f6;
 }
 
 *,
@@ -18,6 +18,21 @@
   box-sizing: border-box;
 }
 
+.visually-hidden:not(:focus):not(:active),
+input[type='checkbox'].visually-hidden,
+input[type='radio'].visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  /* // -webkit-clip-path: inset(100%); */
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
 
 body {
   font-family: 'DM Sans', 'Arial', sans-serif;
