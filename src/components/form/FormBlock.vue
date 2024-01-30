@@ -47,25 +47,31 @@
     <base-button type="submit" label="Отправить" />
   </form>
 
-  <div class="form__wrapper">
-    <checkbox-group
-      name="service"
-      :items="serviceItems"
-      v-model:checkedItems="selectedServiceItems"/>
-      <!-- <checkbox-item
-        value="Test"
-        name="Test name"
-        id="01"
-        label="Test"
-        v-model:checked="checkboxActive"/>
-        {{ checkboxActive }} -->
-  </div>
   selectedServiceItems: {{ selectedServiceItems }}
+  <checkbox-group
+    name="service"
+    :items="serviceItems"
+    v-model:checkedItems="selectedServiceItems"/>
+  
+    <!-- <checkbox-item
+      value="Test"
+      name="Test name"
+      id="01"
+      label="Test"
+      v-model:checked="checkboxActive"/>
+      {{ checkboxActive }} -->
+      
+  selectedBudget: {{ selectedBudget }}
+  <radio-button-group
+    name="budget"
+    :items="budgetItems"/>
+
 
 </template>
 
 <script>
 import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
+import RadioButtonGroup from '@/components/radiobutton/RadioButtonGroup.vue'
 // import CheckboxItem from '@/components/checkbox/CheckboxItem.vue'
 
 import { useVuelidate } from '@vuelidate/core'
@@ -74,7 +80,8 @@ import { required, helpers, email, minLength } from '@vuelidate/validators'
 export default {
   components: {
     // CheckboxItem
-    CheckboxGroup
+    CheckboxGroup,
+    RadioButtonGroup,
   },
   setup() {
     return { v$: useVuelidate() }
@@ -117,6 +124,29 @@ export default {
           isCheckboxActive: false,
         },
       ],
+      selectedBudget: '',
+      budgetItems: [
+        {
+          label: '$5.000 - $10.000',
+          value: '5000-10000',
+          id: 'b1'
+        },
+        {
+          label: '$10.000 - $20.000',
+          value: '10000-20000',
+          id: 'b2'
+        },
+        {
+          label: '$20.000 - $50.000',
+          value: '20000-50000',
+          id: 'b3'
+        },
+        {
+          label: '$50.000 +',
+          value: '50000+',
+          id: 'b4'
+        },
+      ]
     }
   },
   validations() {

@@ -1,4 +1,5 @@
 <template>
+  <div class="checkbox-group">
   <checkbox-item
     v-for="item in items" :key="item.id"
     :label="item.label"
@@ -8,6 +9,8 @@
     :id="item.id"
     :checked="checkedItems.includes(item.value)"
     @updateCheckboxItem="updateCheckedItems"/>
+  </div>
+
 </template>
 
 <script>
@@ -51,3 +54,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 25px;
+  margin-bottom: 50px;
+}
+</style>

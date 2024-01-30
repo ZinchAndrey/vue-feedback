@@ -1,12 +1,10 @@
 <template>
-  <label class="checkbox" :for="id">
-    <input class="checkbox__input visually-hidden" type="checkbox" :value="value" :name="name" :id="id"
+  <label class="radio" :for="id">
+    <input class="radio__input visually-hidden" type="radio" :value="value" :name="name" :id="id"
       @input="updateValue" :checked="checked">
-    <div class="checkbox__icon-wrapper">
-      <inline-svg class="checkbox__icon" :src="iconSrc" />
-
-    </div>
-    <span class="checkbox__title">
+    
+    <span class="radio__symbol"></span>
+    <span class="radio__title">
       {{ label }}
     </span>
   </label>
@@ -14,21 +12,17 @@
 
 <script>
 export default {
-  emits: ['update:checked', 'updateCheckboxItem'],
+  // emits: ['update:checked', 'updateradioItem'],
   props: {
     name: {
       type: String,
-      default: ''
+      required: true,
     },
     value: {
       type: String,
       default: ''
     },
     label: {
-      type: String,
-      default: ''
-    },
-    iconSrc: {
       type: String,
       default: ''
     },
@@ -43,7 +37,7 @@ export default {
   },
   methods: {
     updateValue(evt) {
-      this.$emit('updateCheckboxItem', 
+      this.$emit('updateradioItem', 
         { 
           id: this.id,
           value: this.value,
@@ -51,8 +45,6 @@ export default {
         }
       );
 
-      // это если не чекбокс групп, а просто чекбокс 
-      // this.$emit('update:checked', evt.target.checked);
     }
   }
 }
@@ -61,13 +53,13 @@ export default {
 <style lang="scss" scoped>
 $main-theme-color: #4a3aff;
 
-.checkbox {
+.radio {
   font-family: inherit;
   color: inherit;
 
   display: flex;
   align-items: center;
-  padding: 25px;
+  padding: 40px 25px;
   border-radius: 16px;
   border: 2px solid var(--border-color);
 
@@ -78,23 +70,24 @@ $main-theme-color: #4a3aff;
     box-shadow: 0px 2px 6px 0px rgba(19, 18, 66, 0.07);
   }
 
+  &__active,
   &:has(input:checked) {
     border: 2px solid var(--main-theme-color);
   }
 
-  &__icon-wrapper {
-    width: 65px;
-    height: 65px;
-    display: flex;
+  &__symbol {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
     border-radius: 50%;
-    background: rgba($main-theme-color, 0.15);
-    box-shadow: 0px 0px 10px 0px rgba(74, 58, 255, 0.50);
 
+    border: 1px solid var(--border-color);
   }
 
-  &__icon {
-    margin: auto;
+  input:checked + &__symbol {
+    border: 7px solid var(--main-theme-color)
   }
+
 
   &__title {
     font-size: 18px;
