@@ -8,7 +8,7 @@
     </div>
 
     <base-container>
-      <div class="form__screen screen screen--inputs">
+      <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
         <base-input 
           type="text" 
           placeholder="Name" 
@@ -50,7 +50,7 @@
           iconSrc="/img/company-icon.svg"/>
       </div>
 
-      <div class="form__screen screen screen--checkboxes">
+      <div v-else-if="currentScreenIndex === 2" class="form__screen screen screen--checkboxes">
         <!-- selectedServiceItems: {{ selectedServiceItems }} -->
         <checkbox-group
         name="service"
@@ -58,7 +58,7 @@
         v-model:checkedItems="selectedServiceItems"/>
       </div>
       
-      <div class="form__screen screen screen--radio">
+      <div v-else-if="currentScreenIndex === 3" class="form__screen screen screen--radio">
         <!-- selectedBudget: {{ selectedBudget }} -->
         <radio-button-group
           name="budget"
@@ -68,8 +68,16 @@
     </base-container>
 
     <div class="form__buttons buttons">
-      <base-button type="submit" label="Previous step" :outline="true" />
-      <base-button type="submit" label="Next step" />
+      <base-button v-if="currentScreenIndex > 1" 
+        class="button button--left"
+        type="button" 
+        label="Previous step" 
+        :outline="true"
+        @click="setPrevScreen"/>
+      <base-button v-if="currentScreenIndex < SCREENS_COUNT" 
+        class="button button--right"
+        type="submit" 
+        label="Next step"/>
     </div>
   </form>
 
@@ -94,7 +102,8 @@ export default {
   },
   data() {
     return {
-      currentScreenIndex: 0,
+      SCREENS_COUNT: 4,
+      currentScreenIndex: 1,
       name: '',
       email: '',
       phone: '',
@@ -174,7 +183,7 @@ export default {
       this.currentScreenIndex += 1;
     },
     setPrevScreen() {
-      if (this.currentScreenIndex > 0) {
+      if (this.currentScreenIndex > 1) {
         this.currentScreenIndex -= 1;
       }
     },
@@ -183,14 +192,18 @@ export default {
     },
     submitForm() {
       this.setNextScreen();
-      this.v$.$touch()
+
+      this.v$.$touch();
       // console.log(this.v$);
       if (this.v$.$invalid) {
         return
       }
 
-      const { name, email, phone, company } = this;
-      console.log(name, email, phone, company);
+      // this.setNextScreen();
+
+
+      // const { name, email, phone, company } = this;
+      // console.log(name, email, phone, company);
     }
   }
 }
@@ -225,7 +238,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 45px 30px;
-    margin-bottom: 50px;
+    margin: 0 auto;
   }
 }
 
@@ -235,5 +248,15 @@ export default {
   justify-content: space-between;
 
   margin-top: 30px;
+}
+
+.button {
+  &--left {
+    margin: 0;
+  }
+
+  &--right {
+    margin: 0 0 0 auto;
+  }
 }
 </style>

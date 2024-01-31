@@ -67,7 +67,7 @@ $main-theme-color: #4a3aff;
 
   display: flex;
   align-items: center;
-  padding: 25px;
+  padding: 20px 25px;
   border-radius: 16px;
   border: 2px solid var(--border-color);
 
