@@ -1,14 +1,8 @@
 <template>
   <main>
-    <base-container>
+    <div class="container">
       <form-block/>
-
-      <!-- <base-button type="button" label="Next step" @clickEvent="console.log('test')"/>
-      <base-button type="button" label="Previous step" :outline="true"/> -->
-    </base-container>
-
-
-
+    </div>
   </main>
 </template>
 
@@ -26,5 +20,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 
+  padding: 50px 0;
+}
 </style>

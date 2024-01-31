@@ -1,71 +1,77 @@
 <template>
   <form class="form" @submit.prevent="submitForm">
-    <h2>Форма</h2>
-
-    <div class="form__wrapper">
-      <base-input 
-        type="text" 
-        placeholder="Name" 
-        label="Name" 
-        iconSrc="/img/name-icon.svg" 
-        :errors="v$.name.$errors"
-        v-model="name"
-        @blur="v$.name.$touch()" />
-
-      <base-input 
-        type="email" 
-        placeholder="Email" 
-        label="Email" 
-        iconSrc="/img/email-icon.svg"
-        :errors="v$.email.$errors"
-        v-model="email"
-        @blur="v$.email.$touch()"/>
-        <!-- v$.email.$model  -->
-        <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
-
-      <base-input 
-        type="text" 
-        placeholder="Phone" 
-        label="Phone" 
-        iconSrc="/img/phone-icon.svg"
-        maskValue="{+7} (000) 000-00-00"
-        :errors="v$.phone.$errors"
-        v-model="phone"
-        @blur="v$.phone.$touch()"/>
-      <!-- Маску и length наложить  -->
-      <!-- https://vuejs-tips.github.io/vue-the-mask/  -->
-      <!-- https://www.npmjs.com/package/vue-input-mask -->
-
-      <base-input 
-        type="text" 
-        placeholder="Company" 
-        label="Company" 
-        v-model="company"
-        iconSrc="/img/company-icon.svg"/>
+    <div class="form__header">
+      <h1 class="form__caption">Get a project quote</h1>
+      <p class="form__sub">
+        Please fill the form below to receive a quote for your project. Feel free to add as much detail as needed.
+      </p>
     </div>
 
-    <base-button type="submit" label="Отправить" />
-  </form>
+    <base-container>
+      <div class="form__screen screen screen--inputs">
+        <base-input 
+          type="text" 
+          placeholder="Name" 
+          label="Name" 
+          iconSrc="/img/name-icon.svg" 
+          :errors="v$.name.$errors"
+          v-model="name"
+          @blur="v$.name.$touch()" />
 
-  selectedServiceItems: {{ selectedServiceItems }}
-  <checkbox-group
-    name="service"
-    :items="serviceItems"
-    v-model:checkedItems="selectedServiceItems"/>
-  
-    <!-- <checkbox-item
-      value="Test"
-      name="Test name"
-      id="01"
-      label="Test"
-      v-model:checked="checkboxActive"/>
-      {{ checkboxActive }} -->
+        <base-input 
+          type="email" 
+          placeholder="Email" 
+          label="Email" 
+          iconSrc="/img/email-icon.svg"
+          :errors="v$.email.$errors"
+          v-model="email"
+          @blur="v$.email.$touch()"/>
+          <!-- v$.email.$model  -->
+          <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
+
+        <base-input 
+          type="text" 
+          placeholder="Phone" 
+          label="Phone" 
+          iconSrc="/img/phone-icon.svg"
+          maskValue="{+7} (000) 000-00-00"
+          :errors="v$.phone.$errors"
+          v-model="phone"
+          @blur="v$.phone.$touch()"/>
+        <!-- Маску и length наложить  -->
+        <!-- https://vuejs-tips.github.io/vue-the-mask/  -->
+        <!-- https://www.npmjs.com/package/vue-input-mask -->
+
+        <base-input 
+          type="text" 
+          placeholder="Company" 
+          label="Company" 
+          v-model="company"
+          iconSrc="/img/company-icon.svg"/>
+      </div>
+
+      <div class="form__screen screen screen--checkboxes">
+        <!-- selectedServiceItems: {{ selectedServiceItems }} -->
+        <checkbox-group
+        name="service"
+        :items="serviceItems"
+        v-model:checkedItems="selectedServiceItems"/>
+      </div>
       
-  selectedBudget: {{ selectedBudget }}
-  <radio-button-group
-    name="budget"
-    :items="budgetItems"/>
+      <div class="form__screen screen screen--radio">
+        <!-- selectedBudget: {{ selectedBudget }} -->
+        <radio-button-group
+          name="budget"
+          :items="budgetItems"
+          @updateCheckedValue="updateSelectedBudget"/>
+      </div>
+    </base-container>
 
+    <div class="form__buttons buttons">
+      <base-button type="submit" label="Previous step" :outline="true" />
+      <base-button type="submit" label="Next step" />
+    </div>
+  </form>
 
 </template>
 
@@ -172,6 +178,9 @@ export default {
         this.currentScreenIndex -= 1;
       }
     },
+    updateSelectedBudget(value) {
+      this.selectedBudget = value
+    },
     submitForm() {
       this.setNextScreen();
       this.v$.$touch()
@@ -189,11 +198,42 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  &__wrapper {
+  &__header {
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 55px;
+  }
+
+  &__caption {
+    font-size: 34px;
+    line-height: 135%;
+
+    margin: 0 auto 12px;
+  }
+
+  &__sub {
+    font-size: 18px;
+    line-height: 150%;
+    color: var(--sub-text-color);
+
+    margin: 0 auto 40px;
+  }
+}
+
+.screen {
+  &--inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 45px 30px;
     margin-bottom: 50px;
   }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 30px;
 }
 </style>

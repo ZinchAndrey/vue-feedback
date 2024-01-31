@@ -6,7 +6,8 @@
       :value="item.value"
       :key="item.id"
       :id="item.id"
-      :name="name"/>
+      :name="name"
+      v-model:checkedValue="currentCheckedItem"/>
   </div>
 </template>
 
@@ -25,6 +26,20 @@ export default {
     name: {
       type: String,
       required: true,
+    },
+    checkedItem: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      currentCheckedItem: this.checkedItem
+    }
+  },
+  watch: {
+    currentCheckedItem(value) {
+      this.$emit('updateCheckedValue', value)
     }
   }
 }

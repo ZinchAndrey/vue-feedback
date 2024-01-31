@@ -48,6 +48,9 @@ export default {
 
     cursor: pointer;
 
+    display: flex;
+    align-items: center;
+
     background-color: #fff;
     transition: box-shadow ease-in 0.1s;
     box-shadow: 0px 3px 12px 0px rgba(74, 58, 255, 0.18);
@@ -70,6 +73,7 @@ export default {
     &--outline {
       color: var(--main-theme-color);
       background-color: var(--alt-theme-color);
+      font-weight: 400;
     }
 
     &:disabled {

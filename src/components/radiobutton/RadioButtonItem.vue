@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  // emits: ['update:checked', 'updateradioItem'],
+  emits: ['update:checkedValue'],
   props: {
     name: {
       type: String,
@@ -37,14 +37,8 @@ export default {
   },
   methods: {
     updateValue(evt) {
-      this.$emit('updateradioItem', 
-        { 
-          id: this.id,
-          value: this.value,
-          checked: evt.target.checked 
-        }
-      );
-
+      // console.log(evt.target.value);
+      this.$emit('update:checkedValue', evt.target.value);
     }
   }
 }
