@@ -60,6 +60,5 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px 25px;
-  margin-bottom: 50px;
 }
 </style>

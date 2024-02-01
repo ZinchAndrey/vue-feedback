@@ -14,6 +14,8 @@ codepen с шаговым прогресс-баром https://codepen.io/atakan/
 
 Разбить данные на объекты внутри data()
 
+sumbit можно только в конце делать, а валидацию перенести в след экран
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
