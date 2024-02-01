@@ -56,7 +56,6 @@
       </div>
 
       <div v-else-if="currentScreenIndex === 2" class="form__screen screen screen--checkboxes">
-        <!-- selectedServiceItems: {{ selectedServiceItems }} -->
         <h2 class="screen__caption">
           Our services
         </h2>
@@ -65,13 +64,13 @@
         </p>
 
         <checkbox-group
-        name="service"
-        :items="serviceItems"
-        v-model:checkedItems="selectedServiceItems"/>
+          name="service"
+          :items="serviceItems"
+          v-model:checkedItems="selectedServiceItems"
+          :errors="v$.selectedServiceItems.$errors"/>
       </div>
       
       <div v-else-if="currentScreenIndex === 3" class="form__screen screen screen--radio">
-        <!-- selectedBudget: {{ selectedBudget }} -->
         <h2 class="screen__caption">
           What's your project budget?
         </h2>
@@ -95,8 +94,9 @@
         @click="setPrevScreen"/>
       <base-button v-if="currentScreenIndex < SCREENS_COUNT" 
         class="button button--right"
-        type="submit" 
-        label="Next step"/>
+        type="button" 
+        label="Next step"
+        @click="setNextScreen"/>
     </div>
   </form>
 
@@ -105,14 +105,12 @@
 <script>
 import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
 import RadioButtonGroup from '@/components/radiobutton/RadioButtonGroup.vue'
-// import CheckboxItem from '@/components/checkbox/CheckboxItem.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
 
 export default {
   components: {
-    // CheckboxItem
     CheckboxGroup,
     RadioButtonGroup,
   },
@@ -183,6 +181,12 @@ export default {
       ]
     }
   },
+  computed: {
+    isValid() {
+      return !(this.currentScreenIndex === 1 && this.v$.$validationGroups.contacts.$invalid)
+       && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid);
+    } 
+  },
   validations() {
     return {
       name: { required: helpers.withMessage('Введите имя', required) },
@@ -193,12 +197,30 @@ export default {
       },
       phone: {
         required: helpers.withMessage('Введите номер', required),
-        minLength:helpers.withMessage('Введите номер в указанном формате', minLength(18))
+        minLength: helpers.withMessage('Введите номер в указанном формате', minLength(18))
+      },
+      selectedServiceItems: {
+        required: helpers.withMessage('Выберите хотя бы один пункт', required),
+      },
+      $validationGroups: {
+        contacts: ['name', 'email', 'phone'],
+        services: ['selectedServiceItems']
       }
     }
   },
   methods: {
     setNextScreen() {
+      this.v$.$touch();
+      // console.log(this.v$);
+      // console.log(this.v$.selectedServiceItems.$errors);
+
+      if (!this.isValid) {
+        return;
+      }
+
+
+      // Это чтобы на след экране не было ошибок сразу при показе 
+      this.v$.$reset();
       this.currentScreenIndex += 1;
     },
     setPrevScreen() {
@@ -210,19 +232,7 @@ export default {
       this.selectedBudget = value
     },
     submitForm() {
-      this.setNextScreen();
-
-      // можно отдельную функцию валидации создать в зависимости от экрана 
-      // и перенести вызов этой функции внутрь переключения экрана  
-      this.v$.$touch();
-      // console.log(this.v$);
-      if (this.v$.$invalid) {
-        return
-      }
-
-      // this.setNextScreen();
-
-
+      // записывать данные в LS и выводить сообщение об успехе 
       // const { name, email, phone, company } = this;
       // console.log(name, email, phone, company);
     }
