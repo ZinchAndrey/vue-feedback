@@ -81,7 +81,8 @@
         <radio-button-group
           name="budget"
           :items="budgetItems"
-          @updateCheckedValue="updateSelectedBudget"/>
+          @updateCheckedValue="updateSelectedBudget"
+          :errors="v$.selectedBudget.$errors"/>
       </div>
     </base-container>
 
@@ -184,7 +185,8 @@ export default {
   computed: {
     isValid() {
       return !(this.currentScreenIndex === 1 && this.v$.$validationGroups.contacts.$invalid)
-       && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid);
+       && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid)
+       && !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
     } 
   },
   validations() {
@@ -202,17 +204,19 @@ export default {
       selectedServiceItems: {
         required: helpers.withMessage('Выберите хотя бы один пункт', required),
       },
+      selectedBudget: {
+        required: helpers.withMessage('Выберите один пункт', required),
+      },
       $validationGroups: {
         contacts: ['name', 'email', 'phone'],
-        services: ['selectedServiceItems']
+        services: ['selectedServiceItems'],
+        budget: ['selectedBudget']
       }
     }
   },
   methods: {
     setNextScreen() {
       this.v$.$touch();
-      // console.log(this.v$);
-      // console.log(this.v$.selectedServiceItems.$errors);
 
       if (!this.isValid) {
         return;

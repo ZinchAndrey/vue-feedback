@@ -8,6 +8,8 @@
       :id="item.id"
       :name="name"
       v-model:checkedValue="currentCheckedItem"/>
+      
+      <span v-for="error of errors" :key="error.$uid" class="error-text">{{ error.$message }}</span>
   </div>
 </template>
 
@@ -30,6 +32,10 @@ export default {
     checkedItem: {
       type: String,
       default: ''
+    },
+    errors: {
+      type: Array,
+      required: false
     }
   },
   data() {
@@ -50,5 +56,21 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px 25px;
+  position: relative;
+}
+
+.error-text:nth-child(n) {
+  font-size: 12px;
+  line-height: 120%;
+  color: var(--error-color);
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateY(calc(100% + 5px));
+}
+
+.error-text + .error-text {
+  transform: translateY(calc(200% + 5px))
 }
 </style>
