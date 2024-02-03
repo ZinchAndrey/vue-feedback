@@ -8,6 +8,8 @@
     </div>
 
     <base-container>
+      <step-indicator :step="currentScreenIndex"/>
+
       <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
         <h2 class="screen__caption">
           Contact details
@@ -119,6 +121,7 @@
 <script>
 import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
 import RadioButtonGroup from '@/components/radiobutton/RadioButtonGroup.vue'
+import StepIndicator from '@/components/step-indicator/StepIndicator.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
@@ -127,6 +130,7 @@ export default {
   components: {
     CheckboxGroup,
     RadioButtonGroup,
+    StepIndicator
   },
   setup() {
     return { v$: useVuelidate() }
