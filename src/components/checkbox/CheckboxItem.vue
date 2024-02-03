@@ -103,5 +103,23 @@ $main-theme-color: #4a3aff;
 
     margin-left: 12px;
   }
+
+  @media (max-width: 768px) {
+    padding: 15px 15px;
+
+    &__icon-wrapper {
+      width: 40px;
+      height: 40px;
+    }
+
+    &__icon {
+      width: 25px;
+      height: auto;
+    }
+     
+    &__title {
+      font-size: 16px;
+    }
+  }
 }
 </style>

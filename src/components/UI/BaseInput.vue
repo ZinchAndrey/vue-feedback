@@ -77,6 +77,7 @@ export default {
 
 <style lang="scss" scoped>
 .input__wrapper {
+  font-size: 18px;
   position: relative;
 }
 
@@ -117,24 +118,43 @@ export default {
   &--error {
     border-color: var(--error-color);
   }
-}
+  &__icon {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translate(50%, -50%);
+  }
+  
+  &__error-text:nth-child(n) {
+    font-size: 12px;
+    line-height: 120%;
+    color: var(--error-color);
+  
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+    transform: translateY(calc(100% + 5px));
+  }
 
-.input__icon {
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translate(50%, -50%);
-}
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 15px 40px 15px 15px;
+    border-radius: 25px;
 
-.input__error-text:nth-child(n) {
-  font-size: 12px;
-  line-height: 120%;
-  color: var(--error-color);
+    &__wrapper {
+      font-size: 16px;
+      text-align: left;
+    }
+    
+    &__label {
+      font-size: 16px;
+      margin-top: 10px;
+    }
 
-  position: absolute;
-  left: 20px;
-  bottom: 0;
-  transform: translateY(calc(100% + 5px));
+    &__icon {
+      right: 30px;
+    }
+  }
 }
 
 .input__error-text + .input__error-text {

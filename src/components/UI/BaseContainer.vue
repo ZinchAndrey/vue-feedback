@@ -14,6 +14,14 @@
 
   margin: 0 auto;
   max-width: 700px;
+  width: 100%;
   padding: 55px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 25px 20px;
+    border-radius: 20px;
+  }
 }
 </style>

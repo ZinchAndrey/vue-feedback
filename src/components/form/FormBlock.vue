@@ -8,7 +8,7 @@
     </div>
 
     <base-container>
-      <step-indicator :step="currentScreenIndex"/>
+      <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT"/>
 
       <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
         <h2 class="screen__caption">
@@ -286,6 +286,23 @@ export default {
   }
 }
 
+@media (max-width: 768px) {
+  .form {
+    &__header {
+      padding: 0 35px;
+    }
+
+    &__caption {
+      font-size: 24px;
+    }
+
+    &__sub {
+      font-size: 16px;
+      margin: 0 auto 30px;
+    }
+  }
+}
+
 .screen {
   &__wrapper {
     display: grid;
@@ -315,6 +332,37 @@ export default {
 
   &__icon-success {
     margin: 0 auto 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .screen {
+    &__wrapper {
+      grid-template-columns: 1fr;
+      gap: 30px 20px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    &__caption {
+      font-size: 18px;
+      line-height: 30px;
+      margin: 0 0 8px;
+    }
+
+    &__sub {
+      font-size: 16px;
+      line-height: 20px;
+      color: var(--sub-text-color);
+
+      margin: 0 0 25px;
+    }
+
+    &__icon-success {
+      width: 100px;
+      height: auto;
+      margin: 0 auto 15px;
+    }
   }
 }
 

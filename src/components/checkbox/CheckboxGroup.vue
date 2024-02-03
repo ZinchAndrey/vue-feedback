@@ -61,13 +61,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .checkbox-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px 25px;
 
   position: relative;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 30px 20px;
+  }
 }
 
 .error-text:nth-child(n) {

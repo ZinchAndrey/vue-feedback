@@ -55,6 +55,11 @@ export default {
     transition: box-shadow ease-in 0.1s;
     box-shadow: 0px 3px 12px 0px rgba(74, 58, 255, 0.18);
 
+    @media (max-width: 768px) {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+
     &:hover {
       box-shadow: 0px 3px 15px 0px rgba(74, 58, 255, 0.58);
     }

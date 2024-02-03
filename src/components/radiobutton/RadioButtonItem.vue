@@ -90,5 +90,13 @@ $main-theme-color: #4a3aff;
 
     margin-left: 12px;
   }
+
+  @media (max-width: 768px) {
+    padding: 22px 15px;
+     
+    &__title {
+      font-size: 16px;
+    }
+  }
 }
 </style>

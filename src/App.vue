@@ -19,12 +19,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container {
   width: 100%;
-  max-width: 700px;
+  max-width: 740px;
   margin: 0 auto;
 
-  padding: 50px 0;
+  padding: 50px 20px;
+
+  @media (max-width: 768px) {
+    padding: 30px 10px;
+  }
+
 }
 </style>
