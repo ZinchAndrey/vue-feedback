@@ -84,6 +84,19 @@
           @updateCheckedValue="updateSelectedBudget"
           :errors="v$.selectedBudget.$errors"/>
       </div>
+
+      <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success">
+        <inline-svg class="screen__icon-success" src="/img/success-icon.svg"/>
+        <h2 class="screen__caption">
+          Submit your quote request
+        </h2>
+        <p class="screen__sub">
+          Please review all the information you previously typed in the past steps, and if all is okay, submit your message to receive a project quote in 24 - 48 hours.      </p>
+        <base-button 
+          class="button"
+          label="Submit"
+          type="submit"/>
+        </div>
     </base-container>
 
     <div class="form__buttons buttons">
@@ -237,6 +250,7 @@ export default {
     },
     submitForm() {
       // записывать данные в LS и выводить сообщение об успехе 
+      // можно более удобную структуру данных сделать в виде объекта 
       // const { name, email, phone, company } = this;
       // console.log(name, email, phone, company);
     }
@@ -290,6 +304,14 @@ export default {
 
     margin: 0 0 35px;
   }
+
+  &--success {
+    text-align: center;
+  }
+
+  &__icon-success {
+    margin: 0 auto 18px;
+  }
 }
 
 .buttons {
@@ -301,6 +323,8 @@ export default {
 }
 
 .button {
+  margin: 0 auto;
+
   &--left {
     margin: 0;
   }
