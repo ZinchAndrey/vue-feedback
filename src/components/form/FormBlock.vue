@@ -88,7 +88,7 @@
           :errors="v$.selectedBudget.$errors"/>
       </div>
 
-      <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success">
+      <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success" :class="{'screen--success-submitted': isSubmitted}">
         <inline-svg class="screen__icon-success" src="/img/success-icon.svg"/>
         <h2 class="screen__caption">
           Submit your quote request
@@ -99,6 +99,10 @@
           class="button"
           label="Submit"
           type="submit"/>
+          <span class="screen__success-text">
+            Your data was successfuly sent! <br>
+            We will contact you soon!
+          </span>
         </div>
     </base-container>
 
@@ -139,7 +143,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 4,
+      currentScreenIndex: 1,
 
       name: '',
       email: '',
@@ -199,7 +203,9 @@ export default {
           value: '50000+',
           id: 'b4'
         },
-      ]
+      ],
+
+      isSubmitted: false
     }
   },
   computed: {
@@ -266,7 +272,8 @@ export default {
       };
 
       console.log(userData);
-      localStorage.setItem('userData', JSON.stringify(userData))
+      localStorage.setItem('userData', JSON.stringify(userData));
+      this.isSubmitted = true;
     }
   }
 }
@@ -314,6 +321,7 @@ export default {
 }
 
 .screen {
+  position: relative;
   &__wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -338,6 +346,21 @@ export default {
 
   &--success {
     text-align: center;
+  }
+
+  &__success-text {
+    font-size: 12px;
+    line-height: 120%;
+    color: var(--sub-text-color);
+
+    width: 100%;
+    margin-top: 10px;
+
+    display: none;
+  }
+
+  &--success-submitted .screen__success-text {
+    display: block;
   }
 
   &__icon-success {
