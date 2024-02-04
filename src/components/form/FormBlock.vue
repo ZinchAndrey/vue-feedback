@@ -139,12 +139,15 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 1,
+      currentScreenIndex: 4,
+
       name: '',
       email: '',
       phone: '',
       company: '',
       selectedServiceItems: [],
+      selectedBudget: '',
+
       serviceItems: [
         {
           label: 'Development',
@@ -175,7 +178,6 @@ export default {
           isCheckboxActive: false,
         },
       ],
-      selectedBudget: '',
       budgetItems: [
         {
           label: '$5.000 - $10.000',
@@ -205,7 +207,6 @@ export default {
       return !(this.currentScreenIndex === 1 && this.v$.$validationGroups.contacts.$invalid)
        && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid)
        && !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
-      // return !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
     } 
   },
   validations() {
@@ -255,10 +256,17 @@ export default {
       this.selectedBudget = value
     },
     submitForm() {
-      // записывать данные в LS и выводить сообщение об успехе 
-      // можно более удобную структуру данных сделать в виде объекта 
-      // const { name, email, phone, company } = this;
-      // console.log(name, email, phone, company);
+      const userData = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        company: this.company,
+        selectedServiceItems: [...this.selectedServiceItems],
+        selectedBudget: this.selectedBudget,
+      };
+
+      console.log(userData);
+      localStorage.setItem('userData', JSON.stringify(userData))
     }
   }
 }
