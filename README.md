@@ -1,6 +1,6 @@
 # vue-feedback
 ---
-Ссылка на build здесь [здесь](https://zinchandrey.github.io/feedback-vue-app/)
+Ссылка на build [здесь](https://zinchandrey.github.io/feedback-vue-app/)
 
 ## Questions 1.0
 1. В прошлом проекте я использовал Webpack, сейчас впервые Vite, и я столкнулся с похожей проблемой, которая была в прошлый раз:
