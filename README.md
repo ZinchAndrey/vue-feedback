@@ -1,30 +1,17 @@
 # vue-feedback
+---
+Ссылка на build здесь [здесь](https://zinchandrey.github.io/feedback-vue-app/)
 
-## Заметки
-Можно использовать динамический компонент <component> + в форме <keep-alive>
+## Questions 1.0
+1. В прошлом проекте я использовал Webpack, сейчас впервые Vite, и я столкнулся с похожей проблемой, которая была в прошлый раз:
+Я не понял, как мне использовать пути к .svg-файлам, находящимся внутри `src/assets`? xD 
 
-**???** Спросить про loader для svg файлов
-Временно использую папку public вместо assets 
+Я крайне удивлен, что это не работает из коробки. Я так понимаю, что опять же, отсутствует loader для svg-файлов или что-то подобное, поэтому адрес нормально не парсится.
+Я и гуглил, и плагины разные пробовал, ничего не помогло. Помогло только перенести svg файлы в папку public, тогда все нормально.
+Молю, подскажи пожалуйста, что нужно сделать, чтобы пути к svg-файлам в папке `src/assets` нормально работали?
 
-Спросить про маску телефона, какую использует
+2. Также интересно, а какую маску для телефона из общедоступных ты обычно используешь?
 
-codepen с шаговым прогресс-баром https://codepen.io/atakan/pen/nPOZZR
-
-Уточнить, что лучше записывать в массив выбранных чекбоксов (value или id?)
-
-Разбить данные на объекты внутри data()
-
-В радио кнопке должен быть v-model
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
