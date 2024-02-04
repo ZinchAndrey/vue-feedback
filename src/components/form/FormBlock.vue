@@ -15,7 +15,7 @@
           Contact details
         </h2>
         <p class="screen__sub">
-          Lorem ipsum dolor sit amet consectetur adipisc.
+          Please enter your contacts data.
         </p>
         <div class="screen__wrapper">
           <base-input
@@ -80,10 +80,11 @@
           Please select the project budget range you have in mind.
         </p>
 
+        <!-- @updateCheckedValue="updateSelectedBudget" -->
         <radio-button-group
           name="budget"
           :items="budgetItems"
-          @updateCheckedValue="updateSelectedBudget"
+          v-model:checkedItem="selectedBudget"
           :errors="v$.selectedBudget.$errors"/>
       </div>
 
@@ -204,25 +205,26 @@ export default {
       return !(this.currentScreenIndex === 1 && this.v$.$validationGroups.contacts.$invalid)
        && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid)
        && !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
+      // return !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
     } 
   },
   validations() {
     return {
-      name: { required: helpers.withMessage('Введите имя', required) },
+      name: { required: helpers.withMessage('Enter your name', required) },
       email: { 
-        required: helpers.withMessage('Введите email', required),
-        email: helpers.withMessage('Введите корректный email', email),
+        required: helpers.withMessage('Enter your email', required),
+        email: helpers.withMessage('Enter email in a correct format', email),
         $lazy: true
       },
       phone: {
-        required: helpers.withMessage('Введите номер', required),
-        minLength: helpers.withMessage('Введите номер в указанном формате', minLength(18))
+        required: helpers.withMessage('Enter your phone number', required),
+        minLength: helpers.withMessage('Phone number should be in a specified format', minLength(18))
       },
       selectedServiceItems: {
-        required: helpers.withMessage('Выберите хотя бы один пункт', required),
+        required: helpers.withMessage('Select at least one item', required),
       },
       selectedBudget: {
-        required: helpers.withMessage('Выберите один пункт', required),
+        required: helpers.withMessage('Select your budget', required),
       },
       $validationGroups: {
         contacts: ['name', 'email', 'phone'],

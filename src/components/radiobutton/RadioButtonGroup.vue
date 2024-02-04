@@ -7,6 +7,7 @@
       :key="item.id"
       :id="item.id"
       :name="name"
+      :checked="checkedItem === item.value"
       v-model:checkedValue="currentCheckedItem"/>
       
       <span v-for="error of errors" :key="error.$uid" class="error-text">{{ error.$message }}</span>
@@ -45,7 +46,7 @@ export default {
   },
   watch: {
     currentCheckedItem(value) {
-      this.$emit('updateCheckedValue', value)
+      this.$emit('update:checkedItem', value)
     }
   }
 }
