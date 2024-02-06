@@ -1,9 +1,8 @@
 <template>
   <div class="step">
     <ul class="step__list">
-      <li v-for="(n) in stepsCount" :key="n"
-        class="step__item"
-        :class="{'step__item--filled': n <= currentStep, 'step__item--current': n === currentStep}">
+      <li v-for="(n) in stepsCount" :key="n" class="step__item"
+        :class="{ 'step__item--filled': n < currentStep, 'step__item--current': n === currentStep }">
         <span class="step__number">{{ n }}</span>
         <div class="step__progress-bar">
           <div class="step__progress-bar-filled"></div>
@@ -29,6 +28,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:root {
+  --animation-duration: 0.3s;
+}
+
 .step {
   font-size: 15px;
   line-height: 18px;
@@ -66,11 +69,15 @@ export default {
     border-radius: 50%;
 
     background-color: var(--border-color);
+
+    transition: all ease-in 0.1s;
+    transition-delay: 0.3s;
   }
 
   &__item:last-child {
     flex-grow: initial;
   }
+
   &__item:last-child .step__progress-bar {
     display: none;
   }
@@ -96,7 +103,6 @@ export default {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    // transition: width ease-in 0.3s;
   }
 
   &__item--filled {
@@ -120,6 +126,21 @@ export default {
       width: 50%;
     }
   }
+
+  // ANIMATION 
+  .step__progress-bar-filled {
+    transition: width ease-in 0.3s;
+    transition-delay: 0.3s;
+  }
+
+  .step__item--filled .step__progress-bar-filled {
+    transition-delay: 0s;
+  }
+
+  .step__item--current + .step__item .step__progress-bar-filled {
+    transition-delay: 0s;
+  }
+
 
   @media (max-width: 768px) {
     font-size: 12px;

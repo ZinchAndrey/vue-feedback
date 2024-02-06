@@ -88,7 +88,9 @@
           :errors="v$.selectedBudget.$errors"/>
       </div>
 
-      <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success" :class="{'screen--success-submitted': isSubmitted}">
+      <form-screen-success v-else-if="currentScreenIndex === 4"/>
+
+      <!-- <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success" :class="{'screen--success-submitted': isSubmitted}">
         <inline-svg class="screen__icon-success" src="img/success-icon.svg"/>
         <h2 class="screen__caption">
           Submit your quote request
@@ -103,7 +105,8 @@
             Your data was successfuly sent! <br>
             We will contact you soon!
           </span>
-        </div>
+      </div> -->
+
     </base-container>
 
     <div class="form__buttons buttons">
@@ -127,6 +130,7 @@
 import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
 import RadioButtonGroup from '@/components/radiobutton/RadioButtonGroup.vue'
 import StepIndicator from '@/components/step-indicator/StepIndicator.vue'
+import FormScreenSuccess from '@/components/form/FormScreenSuccess.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
@@ -135,7 +139,8 @@ export default {
   components: {
     CheckboxGroup,
     RadioButtonGroup,
-    StepIndicator
+    StepIndicator,
+    FormScreenSuccess
   },
   setup() {
     return { v$: useVuelidate() }
@@ -143,7 +148,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 2,
+      currentScreenIndex: 4,
 
       name: '',
       email: '',
