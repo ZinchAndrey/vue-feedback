@@ -22,7 +22,7 @@
             type="text"
             placeholder="Name"
             label="Name"
-            iconSrc="/img/name-icon.svg"
+            iconSrc="img/name-icon.svg"
             :errors="v$.name.$errors"
             v-model="name"
             @blur="v$.name.$touch()" />
@@ -30,7 +30,7 @@
             type="email"
             placeholder="Email"
             label="Email"
-            iconSrc="/img/email-icon.svg"
+            iconSrc="img/email-icon.svg"
             :errors="v$.email.$errors"
             v-model="email"
             @blur="v$.email.$touch()"/>
@@ -40,7 +40,7 @@
             type="text"
             placeholder="Phone"
             label="Phone"
-            iconSrc="/img/phone-icon.svg"
+            iconSrc="img/phone-icon.svg"
             maskValue="{+7} (000) 000-00-00"
             :errors="v$.phone.$errors"
             v-model="phone"
@@ -53,7 +53,7 @@
             placeholder="Company"
             label="Company"
             v-model="company"
-            iconSrc="/img/company-icon.svg"/>
+            iconSrc="img/company-icon.svg"/>
         </div>
       </div>
 
@@ -89,7 +89,7 @@
       </div>
 
       <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success" :class="{'screen--success-submitted': isSubmitted}">
-        <inline-svg class="screen__icon-success" src="/img/success-icon.svg"/>
+        <inline-svg class="screen__icon-success" src="img/success-icon.svg"/>
         <h2 class="screen__caption">
           Submit your quote request
         </h2>
@@ -143,7 +143,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 1,
+      currentScreenIndex: 2,
 
       name: '',
       email: '',
@@ -155,28 +155,28 @@ export default {
       serviceItems: [
         {
           label: 'Development',
-          iconSrc: '/img/development-icon.svg',
+          iconSrc: 'img/development-icon.svg',
           value: 'development',
           id: 's1',
           isCheckboxActive: false,
         },
         {
           label: 'Web Design',
-          iconSrc: '/img/web-design-icon.svg',
+          iconSrc: 'img/web-design-icon.svg',
           value: 'web design',
           id: 's2',
           isCheckboxActive: false,
         },
         {
           label: 'Marketing',
-          iconSrc: '/img/marketing-icon.svg',
+          iconSrc: 'img/marketing-icon.svg',
           value: 'marketing',
           id: 's3',
           isCheckboxActive: false,
         },
         {
           label: 'Other',
-          iconSrc: '/img/other-icon.svg',
+          iconSrc: 'img/other-icon.svg',
           value: 'other',
           id: 's4',
           isCheckboxActive: false,

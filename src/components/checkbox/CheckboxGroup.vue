@@ -1,6 +1,6 @@
 <template>
   <div class="checkbox-group">
-  <checkbox-item
+  <base-checkbox
     v-for="item in items" :key="item.id"
     :label="item.label"
     :iconSrc="item.iconSrc"
@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import CheckboxItem from '@/components/checkbox/CheckboxItem.vue'
+import BaseCheckbox from '@/components/UI/BaseCheckbox.vue'
 
 export default {
   components: {
-    CheckboxItem,
+    BaseCheckbox,
   },
   emits: ['update:checkedItems'],
   props: {

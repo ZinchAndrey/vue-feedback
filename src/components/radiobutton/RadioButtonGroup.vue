@@ -1,6 +1,6 @@
 <template>
   <div class="radiobutton-group">
-    <radio-button-item
+    <base-radio-button
       v-for="item in items"
       :label="item.label"
       :value="item.value"
@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import RadioButtonItem from './RadioButtonItem.vue';
+import BaseRadioButton from '@/components/UI/BaseRadioButton.vue';
 
 export default {
   components: {
-    RadioButtonItem,
+    BaseRadioButton,
   },
   props: {
     items: {

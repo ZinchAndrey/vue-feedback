@@ -1,8 +1,7 @@
 <template>
   <button 
     :class="['btn', `btn--${color}`, {'btn--outline' : outline }]"
-    :disabled="disabled"
-    @click="onBtnClick">
+    :disabled="disabled">
     {{ label }}
   </button>
 </template>
@@ -27,11 +26,6 @@ export default {
       default: false
     }
   },
-  methods: {
-    onBtnClick() {
-      this.$emit('click-event');
-    }
-  }
 }
 </script>
 
