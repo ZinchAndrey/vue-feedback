@@ -16,6 +16,10 @@
       Your data was successfuly sent! <br>
       We will contact you soon!
     </span>
+
+    <img src="@/assets/icons/email-icon.png" alt="">
+    <img src="@/assets/icons/email-icon.svg" alt="">
+
   </form-base-screen>
 </template>
 
@@ -25,7 +29,7 @@ import FormBaseScreen from './FormBaseScreen.vue'
 export default {
   components: {
     FormBaseScreen,
-  }
+  },
 }
 </script>
 
