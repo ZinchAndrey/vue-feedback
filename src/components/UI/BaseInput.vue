@@ -2,24 +2,19 @@
   <div class="input__wrapper">
     {{ label }}
     <label class="input__label">
-   
-      <input 
-        class="input" :class="{'input--error': errors && !!errors.length}" 
-        :type="type" 
-        :placeholder="placeholder"
-        :value="modelValue"
-        v-imask="maskValue ? mask : ''"
-        @input="updateValue"
-        @blur="blurField">
+
+      <input class="input" :class="{ 'input--error': errors && !!errors.length }" :type="type" :placeholder="placeholder"
+        :value="modelValue" v-imask="maskValue ? mask : ''" @input="updateValue" @blur="blurField">
 
       <span v-for="error of errors" :key="error.$uid" class="input__error-text">{{ error.$message }}</span>
-      <inline-svg class="input__icon" :src="iconSrc" />
+      <inline-svg class="input__icon" :src="imgSrc" />
     </label>
   </div>
 </template>
 
 <script>
 import { IMaskDirective } from 'vue-imask';
+import { getImageURL } from '@/utils.js';
 
 export default {
   emits: ['update:modelValue', 'blur'],
@@ -58,7 +53,12 @@ export default {
       mask: {
         mask: this.maskValue,
         lazy: true
-        },
+      },
+    }
+  },
+  computed: {
+    imgSrc() {
+      return getImageURL(this.iconSrc);
     }
   },
   methods: {
@@ -118,18 +118,19 @@ export default {
   &--error {
     border-color: var(--error-color);
   }
+
   &__icon {
     position: absolute;
     right: 40px;
     top: 50%;
     transform: translate(50%, -50%);
   }
-  
+
   &__error-text:nth-child(n) {
     font-size: 12px;
     line-height: 120%;
     color: var(--error-color);
-  
+
     position: absolute;
     left: 20px;
     bottom: 0;
@@ -145,7 +146,7 @@ export default {
       font-size: 16px;
       text-align: left;
     }
-    
+
     &__label {
       font-size: 16px;
       margin-top: 10px;
@@ -157,7 +158,7 @@ export default {
   }
 }
 
-.input__error-text + .input__error-text {
+.input__error-text+.input__error-text {
   transform: translateY(calc(200% + 5px))
 }
 </style>

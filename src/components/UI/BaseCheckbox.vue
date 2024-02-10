@@ -3,7 +3,7 @@
     <input class="checkbox__input visually-hidden" type="checkbox" :value="value" :name="name" :id="id"
       @input="updateValue" :checked="checked">
     <div class="checkbox__icon-wrapper">
-      <inline-svg class="checkbox__icon" :src="iconSrc" />
+      <inline-svg class="checkbox__icon" :src="imgSrc" />
 
     </div>
     <span class="checkbox__title">
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { getImageURL } from '@/utils.js';
+
 export default {
   emits: ['update:checked', 'updateCheckboxItem'],
   props: {
@@ -41,21 +43,26 @@ export default {
       default: false,
     }
   },
-  methods: {
-    updateValue(evt) {
-      this.$emit('updateCheckboxItem', 
-        { 
-          id: this.id,
-          value: this.value,
-          checked: evt.target.checked 
-        }
-      );
+  computed: {
+    imgSrc() {
+      return getImageURL(this.iconSrc);
+    }
+  },
+    methods: {
+      updateValue(evt) {
+        this.$emit('updateCheckboxItem',
+          {
+            id: this.id,
+            value: this.value,
+            checked: evt.target.checked
+          }
+        );
 
-      // это если не чекбокс групп, а просто чекбокс 
-      // this.$emit('update:checked', evt.target.checked);
+        // это если не чекбокс групп, а просто чекбокс 
+        // this.$emit('update:checked', evt.target.checked);
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -116,7 +123,7 @@ $main-theme-color: #4a3aff;
       width: 25px;
       height: auto;
     }
-     
+
     &__title {
       font-size: 16px;
     }

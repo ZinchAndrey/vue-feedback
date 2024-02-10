@@ -2,7 +2,7 @@
 <template>
   <form-base-screen class="screen--success">
     <template v-slot:screen-icon>
-      <inline-svg class="screen__icon-success" src="img/success-icon.svg" />
+      <inline-svg class="screen__icon-success" :src="successIcon" />
     </template>
 
     <h2 class="screen__caption">
@@ -16,20 +16,22 @@
       Your data was successfuly sent! <br>
       We will contact you soon!
     </span>
-
-    <img src="@/assets/icons/email-icon.png" alt="">
-    <img src="@/assets/icons/email-icon.svg" alt="">
-
   </form-base-screen>
 </template>
 
 <script>
 import FormBaseScreen from './FormBaseScreen.vue'
+import successIcon from '@/assets/icons/success-icon.svg';
 
 export default {
   components: {
     FormBaseScreen,
   },
+  data() {
+    return {
+      successIcon,
+    }
+  }
 }
 </script>
 
