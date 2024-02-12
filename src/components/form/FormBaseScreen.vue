@@ -1,13 +1,6 @@
 <template>
   <div class="screen">
     <slot name="screen-icon"></slot>
-    <!-- <h2 class="screen__caption">
-      {{ caption }}
-    </h2>
-    <p class="screen__sub">
-      {{ sub }}
-    </p> -->
-
     <slot></slot>
   </div>
 </template>

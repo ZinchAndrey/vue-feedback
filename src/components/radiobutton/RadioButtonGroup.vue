@@ -21,6 +21,7 @@ export default {
   components: {
     BaseRadioButton,
   },
+  emits: ['update:checkedItem'],
   props: {
     items: {
       type: Array,

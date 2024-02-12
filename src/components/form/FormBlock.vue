@@ -8,7 +8,7 @@
     </div>
 
     <base-container>
-      <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT"/>
+      <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT" />
 
       <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
         <h2 class="screen__caption">
@@ -18,42 +18,19 @@
           Please enter your contacts data.
         </p>
         <div class="screen__wrapper">
-          <base-input
-            type="text"
-            placeholder="Name"
-            label="Name"
-            iconSrc="icons/name-icon.svg"
-            :errors="v$.name.$errors"
-            v-model="name"
-            @blur="v$.name.$touch()" />
-          <base-input
-            type="email"
-            placeholder="Email"
-            label="Email"
-            iconSrc="icons/email-icon.svg"
-            :errors="v$.email.$errors"
-            v-model="email"
-            @blur="v$.email.$touch()"/>
-            <!-- v$.email.$model  -->
-            <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
-          <base-input
-            type="text"
-            placeholder="Phone"
-            label="Phone"
-            iconSrc="icons/phone-icon.svg"
-            maskValue="{+7} (000) 000-00-00"
-            :errors="v$.phone.$errors"
-            v-model="phone"
-            @blur="v$.phone.$touch()"/>
+          <base-input type="text" placeholder="Name" label="Name" iconSrc="icons/name-icon.svg" :errors="v$.name.$errors"
+            v-model="name" @blur="v$.name.$touch()" />
+          <base-input type="email" placeholder="Email" label="Email" iconSrc="icons/email-icon.svg"
+            :errors="v$.email.$errors" v-model="email" @blur="v$.email.$touch()" />
+          <!-- v$.email.$model  -->
+          <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
+          <base-input type="text" placeholder="Phone" label="Phone" iconSrc="icons/phone-icon.svg"
+            maskValue="{+7} (000) 000-00-00" :errors="v$.phone.$errors" v-model="phone" @blur="v$.phone.$touch()" />
           <!-- Маску и length наложить  -->
           <!-- https://vuejs-tips.github.io/vue-the-mask/  -->
           <!-- https://www.npmjs.com/package/vue-input-mask -->
-          <base-input
-            type="text"
-            placeholder="Company"
-            label="Company"
-            v-model="company"
-            iconSrc="icons/company-icon.svg"/>
+          <base-input type="text" placeholder="Company" label="Company" v-model="company"
+            iconSrc="icons/company-icon.svg" />
         </div>
       </div>
 
@@ -65,14 +42,11 @@
           Please select which service you are interested in.
         </p>
 
-        <checkbox-group
-          name="service"
-          :items="serviceItems"
-          v-model:checkedItems="selectedServiceItems"
-          :errors="v$.selectedServiceItems.$errors"/>
+        <checkbox-group name="service" :items="serviceItems" v-model:checkedItems="selectedServiceItems"
+          :errors="v$.selectedServiceItems.$errors" />
       </div>
-      
-      <div v-else-if="currentScreenIndex === 3" class="form__screen screen screen--radio">
+
+      <div v-else-if="currentScreenIndex === 5" class="form__screen screen screen--radio">
         <h2 class="screen__caption">
           What's your project budget?
         </h2>
@@ -81,56 +55,31 @@
         </p>
 
         <!-- @updateCheckedValue="updateSelectedBudget" -->
-        <radio-button-group
-          name="budget"
-          :items="budgetItems"
-          v-model:checkedItem="selectedBudget"
-          :errors="v$.selectedBudget.$errors"/>
+        <radio-button-group name="budget" :items="budgetItems" v-model:checkedItem="selectedBudget"
+          :errors="v$.selectedBudget.$errors" />
       </div>
 
-      <form-screen-success v-else-if="currentScreenIndex === 4"/>
-
-      <!-- <div v-else-if="currentScreenIndex === 4" class="form__screen screen screen--success" :class="{'screen--success-submitted': isSubmitted}">
-        <inline-svg class="screen__icon-success" src="@/assets/icons/success-icon.svg"/>
-        <h2 class="screen__caption">
-          Submit your quote request
-        </h2>
-        <p class="screen__sub">
-          Please review all the information you previously typed in the past steps, and if all is okay, submit your message to receive a project quote in 24 - 48 hours.      </p>
-        <base-button 
-          class="button"
-          label="Submit"
-          type="submit"/>
-          <span class="screen__success-text">
-            Your data was successfuly sent! <br>
-            We will contact you soon!
-          </span>
-      </div> -->
+      <form-screen-budget v-else-if="currentScreenIndex === 3" />
+      <form-screen-success v-else-if="currentScreenIndex === 4" />
 
     </base-container>
 
     <div class="form__buttons buttons">
-      <base-button v-if="currentScreenIndex > 1" 
-        class="button button--left"
-        type="button" 
-        label="Previous step" 
-        :outline="true"
-        @click="setPrevScreen"/>
-      <base-button v-if="currentScreenIndex < SCREENS_COUNT" 
-        class="button button--right"
-        type="button" 
-        label="Next step"
-        @click="setNextScreen"/>
+      <base-button v-if="currentScreenIndex > 1" class="button button--left" type="button" label="Previous step"
+        :outline="true" @click="setPrevScreen" />
+      <base-button v-if="currentScreenIndex < SCREENS_COUNT" class="button button--right" type="button" label="Next step"
+        @click="setNextScreen" />
     </div>
   </form>
-
 </template>
 
 <script>
+import { computed } from 'vue'
 import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
 import RadioButtonGroup from '@/components/radiobutton/RadioButtonGroup.vue'
 import StepIndicator from '@/components/step-indicator/StepIndicator.vue'
 import FormScreenSuccess from '@/components/form/FormScreenSuccess.vue'
+import FormScreenBudget from '@/components/form/FormScreenBudget.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
@@ -140,7 +89,8 @@ export default {
     CheckboxGroup,
     RadioButtonGroup,
     StepIndicator,
-    FormScreenSuccess
+    FormScreenSuccess,
+    FormScreenBudget,
   },
   setup() {
     return { v$: useVuelidate() }
@@ -148,7 +98,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 1,
+      currentScreenIndex: 3,
 
       name: '',
       email: '',
@@ -213,17 +163,24 @@ export default {
       isSubmitted: false
     }
   },
+  provide() {
+    return {
+      budgetItems: this.budgetItems,
+      selectedBudget: computed(() => this.selectedBudget),
+      updateSelectedBudget: this.updateSelectedBudget,
+    }
+  },
   computed: {
     isValid() {
       return !(this.currentScreenIndex === 1 && this.v$.$validationGroups.contacts.$invalid)
-       && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid)
-       && !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
-    } 
+        && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid)
+        && !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
+    },
   },
   validations() {
     return {
       name: { required: helpers.withMessage('Enter your name', required) },
-      email: { 
+      email: {
         required: helpers.withMessage('Enter your email', required),
         email: helpers.withMessage('Enter email in a correct format', email),
         $lazy: true
@@ -264,7 +221,7 @@ export default {
       }
     },
     updateSelectedBudget(value) {
-      this.selectedBudget = value
+      this.selectedBudget = value;
     },
     submitForm() {
       const userData = {
@@ -327,6 +284,7 @@ export default {
 
 .screen {
   position: relative;
+
   &__wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
