@@ -8,8 +8,8 @@
     </p>
     <!-- @updateCheckedValue="updateSelectedBudget" -->
     <radio-button-group name="budget" :items="budgetItems" :checkedItem="selectedBudget"
-      @update:checkedItem="setCurrentBudget" />
-    <!-- :errors="v$.selectedBudget.$errors" /> -->
+      @update:checkedItem="setCurrentBudget"
+      :errors="validationGroups.budget.$errors" />
   </form-base-screen>
 </template>
 
@@ -22,7 +22,7 @@ export default {
     FormBaseScreen,
     RadioButtonGroup
   },
-  inject: ['budgetItems', 'selectedBudget', 'updateSelectedBudget'],
+  inject: ['budgetItems', 'selectedBudget', 'updateSelectedBudget', 'validationGroups'],
   methods: {
     setCurrentBudget(value) {
       this.updateSelectedBudget(value);

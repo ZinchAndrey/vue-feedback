@@ -167,6 +167,7 @@ export default {
     return {
       budgetItems: this.budgetItems,
       selectedBudget: computed(() => this.selectedBudget),
+      validationGroups: computed(() => this.v$.$validationGroups),
       updateSelectedBudget: this.updateSelectedBudget,
     }
   },
@@ -205,7 +206,8 @@ export default {
   methods: {
     setNextScreen() {
       this.v$.$touch();
-
+      console.log(this.v$);
+      // console.log(this.v$.$validationGroups);
       if (!this.isValid) {
         return;
       }
