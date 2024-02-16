@@ -6,7 +6,6 @@
     <p class="screen__sub">
       Please select the project budget range you have in mind.
     </p>
-    <!-- @updateCheckedValue="updateSelectedBudget" -->
     <radio-button-group name="budget" :items="budgetItems" :checkedItem="selectedBudget"
       @update:checkedItem="setCurrentBudget"
       :errors="validationGroups.budget.$errors" />

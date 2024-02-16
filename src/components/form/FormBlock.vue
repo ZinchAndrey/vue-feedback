@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div v-else-if="currentScreenIndex === 2" class="form__screen screen screen--checkboxes">
+      <!-- <div v-else-if="currentScreenIndex === 2" class="form__screen screen screen--checkboxes">
         <h2 class="screen__caption">
           Our services
         </h2>
@@ -44,9 +44,9 @@
 
         <checkbox-group name="service" :items="serviceItems" v-model:checkedItems="selectedServiceItems"
           :errors="v$.selectedServiceItems.$errors" />
-      </div>
+      </div> -->
 
-      <div v-else-if="currentScreenIndex === 5" class="form__screen screen screen--radio">
+      <!-- <div v-else-if="currentScreenIndex === 5" class="form__screen screen screen--radio">
         <h2 class="screen__caption">
           What's your project budget?
         </h2>
@@ -54,11 +54,11 @@
           Please select the project budget range you have in mind.
         </p>
 
-        <!-- @updateCheckedValue="updateSelectedBudget" -->
         <radio-button-group name="budget" :items="budgetItems" v-model:checkedItem="selectedBudget"
           :errors="v$.selectedBudget.$errors" />
-      </div>
+      </div> -->
 
+      <form-screen-services v-else-if="currentScreenIndex === 2" />
       <form-screen-budget v-else-if="currentScreenIndex === 3" />
       <form-screen-success v-else-if="currentScreenIndex === 4" />
 
@@ -75,22 +75,20 @@
 
 <script>
 import { computed } from 'vue'
-import CheckboxGroup from '@/components/checkbox/CheckboxGroup.vue'
-import RadioButtonGroup from '@/components/radiobutton/RadioButtonGroup.vue'
 import StepIndicator from '@/components/step-indicator/StepIndicator.vue'
 import FormScreenSuccess from '@/components/form/FormScreenSuccess.vue'
 import FormScreenBudget from '@/components/form/FormScreenBudget.vue'
+import FormScreenServices from '@/components/form/FormScreenServices.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
 
 export default {
   components: {
-    CheckboxGroup,
-    RadioButtonGroup,
     StepIndicator,
     FormScreenSuccess,
     FormScreenBudget,
+    FormScreenServices
   },
   setup() {
     return { v$: useVuelidate() }
@@ -98,7 +96,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 3,
+      currentScreenIndex: 2,
 
       name: '',
       email: '',
@@ -169,6 +167,11 @@ export default {
       selectedBudget: computed(() => this.selectedBudget),
       validationGroups: computed(() => this.v$.$validationGroups),
       updateSelectedBudget: this.updateSelectedBudget,
+      
+      serviceItems: this.serviceItems,
+      selectedServiceItems: computed(() => this.selectedServiceItems),
+      updateSelectedServices: this.updateSelectedServices,
+
     }
   },
   computed: {
@@ -224,6 +227,9 @@ export default {
     },
     updateSelectedBudget(value) {
       this.selectedBudget = value;
+    },
+    updateSelectedServices(value) {
+      this.selectedServiceItems = value;
     },
     submitForm() {
       const userData = {
