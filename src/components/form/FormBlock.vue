@@ -10,7 +10,7 @@
     <base-container>
       <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT" />
 
-      <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
+      <!-- <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
         <h2 class="screen__caption">
           Contact details
         </h2>
@@ -22,42 +22,14 @@
             v-model="name" @blur="v$.name.$touch()" />
           <base-input type="email" placeholder="Email" label="Email" iconSrc="icons/email-icon.svg"
             :errors="v$.email.$errors" v-model="email" @blur="v$.email.$touch()" />
-          <!-- v$.email.$model  -->
-          <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
           <base-input type="text" placeholder="Phone" label="Phone" iconSrc="icons/phone-icon.svg"
             maskValue="{+7} (000) 000-00-00" :errors="v$.phone.$errors" v-model="phone" @blur="v$.phone.$touch()" />
-          <!-- Маску и length наложить  -->
-          <!-- https://vuejs-tips.github.io/vue-the-mask/  -->
-          <!-- https://www.npmjs.com/package/vue-input-mask -->
           <base-input type="text" placeholder="Company" label="Company" v-model="company"
             iconSrc="icons/company-icon.svg" />
         </div>
-      </div>
-
-      <!-- <div v-else-if="currentScreenIndex === 2" class="form__screen screen screen--checkboxes">
-        <h2 class="screen__caption">
-          Our services
-        </h2>
-        <p class="screen__sub">
-          Please select which service you are interested in.
-        </p>
-
-        <checkbox-group name="service" :items="serviceItems" v-model:checkedItems="selectedServiceItems"
-          :errors="v$.selectedServiceItems.$errors" />
       </div> -->
 
-      <!-- <div v-else-if="currentScreenIndex === 5" class="form__screen screen screen--radio">
-        <h2 class="screen__caption">
-          What's your project budget?
-        </h2>
-        <p class="screen__sub">
-          Please select the project budget range you have in mind.
-        </p>
-
-        <radio-button-group name="budget" :items="budgetItems" v-model:checkedItem="selectedBudget"
-          :errors="v$.selectedBudget.$errors" />
-      </div> -->
-
+      <form-screen-contacts v-if="currentScreenIndex === 1" />
       <form-screen-services v-else-if="currentScreenIndex === 2" />
       <form-screen-budget v-else-if="currentScreenIndex === 3" />
       <form-screen-success v-else-if="currentScreenIndex === 4" />
@@ -79,6 +51,7 @@ import StepIndicator from '@/components/step-indicator/StepIndicator.vue'
 import FormScreenSuccess from '@/components/form/FormScreenSuccess.vue'
 import FormScreenBudget from '@/components/form/FormScreenBudget.vue'
 import FormScreenServices from '@/components/form/FormScreenServices.vue'
+import FormScreenContacts from '@/components/form/FormScreenContacts.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
@@ -88,7 +61,8 @@ export default {
     StepIndicator,
     FormScreenSuccess,
     FormScreenBudget,
-    FormScreenServices
+    FormScreenServices,
+    FormScreenContacts
   },
   setup() {
     return { v$: useVuelidate() }
@@ -96,7 +70,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 2,
+      currentScreenIndex: 1,
 
       name: '',
       email: '',
@@ -171,7 +145,13 @@ export default {
       serviceItems: this.serviceItems,
       selectedServiceItems: computed(() => this.selectedServiceItems),
       updateSelectedServices: this.updateSelectedServices,
-
+      
+      name: computed(() => this.name),
+      email: computed(() => this.email),
+      phone: computed(() => this.phone),
+      company: computed(() => this.company),
+      updateFieldValue: this.updateFieldValue,
+      vTouchForm: this.vTouchForm,
     }
   },
   computed: {
@@ -209,12 +189,9 @@ export default {
   methods: {
     setNextScreen() {
       this.v$.$touch();
-      console.log(this.v$);
-      // console.log(this.v$.$validationGroups);
       if (!this.isValid) {
         return;
       }
-
 
       // Это чтобы на след экране не было ошибок сразу при показе 
       this.v$.$reset();
@@ -230,6 +207,12 @@ export default {
     },
     updateSelectedServices(value) {
       this.selectedServiceItems = value;
+    },
+    updateFieldValue(value, field) {
+      this[field] = value;
+    },
+    vTouchForm(valueName) {
+      this.v$[valueName] && this.v$[valueName].$touch();
     },
     submitForm() {
       const userData = {

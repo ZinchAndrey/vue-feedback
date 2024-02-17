@@ -3,10 +3,18 @@
     {{ label }}
     <label class="input__label">
 
-      <input class="input" :class="{ 'input--error': errors && !!errors.length }" :type="type" :placeholder="placeholder"
-        :value="modelValue" v-imask="maskValue ? mask : ''" @input="updateValue" @blur="blurField">
+      <input class="input" 
+        :class="{ 'input--error': error && error.$message }" 
+        :type="type" 
+        :placeholder="placeholder"
+        :value="modelValue" 
+        :name="fieldName"
+        v-imask="maskValue ? mask : ''" 
+        @input="updateValue" 
+        @blur="blurField">
 
-      <span v-for="error of errors" :key="error.$uid" class="input__error-text">{{ error.$message }}</span>
+      <!-- <span v-for="error of errors" :key="error.$uid" class="input__error-text">{{ error.$message }}</span> -->
+      <span v-if="error && error.$message" class="input__error-text">{{ error.$message }}</span>
       <inline-svg class="input__icon" :src="imgSrc" />
     </label>
   </div>
@@ -35,8 +43,16 @@ export default {
       type: String,
       default: ''
     },
-    errors: {
-      type: Array,
+    fieldName: {
+      type: String,
+      default: ''
+    },
+    // errors: {
+    //   type: Array,
+    //   required: false,
+    // },
+    error: {
+      type: Object,
       required: false,
     },
     modelValue: {
@@ -63,10 +79,10 @@ export default {
   },
   methods: {
     updateValue(evt) {
-      this.$emit('update:modelValue', evt.target.value);
+      this.$emit('update:modelValue', evt.target.value, evt.target.name);
     },
-    blurField() {
-      this.$emit('blur');
+    blurField(evt) {
+      this.$emit('blur', evt);
     },
   },
   directives: {
