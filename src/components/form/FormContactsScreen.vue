@@ -17,8 +17,6 @@
       :modelValue="name"
       @update:modelValue="setCurrentFieldValue"
       @blur="validateField" />
-      <!-- v-model="name" -->
-      <!-- @blur="v$.name.$touch()"  -->
 
     <base-input 
       type="email" 
@@ -30,7 +28,6 @@
       :modelValue="email"
       @update:modelValue="setCurrentFieldValue"
       @blur="validateField" />
-    <!-- v$.email.$model  -->
     <!-- тут намеренно не использую $model, так как хочу по blur валидировать -->
     
     <base-input 
@@ -44,6 +41,7 @@
       :modelValue="phone"
       @update:modelValue="setCurrentFieldValue"      
       @blur="validateField" />
+      
     <base-input 
       type="text" 
       placeholder="Company" 

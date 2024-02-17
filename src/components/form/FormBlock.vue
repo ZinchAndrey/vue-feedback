@@ -29,10 +29,10 @@
         </div>
       </div> -->
 
-      <form-screen-contacts v-if="currentScreenIndex === 1" />
-      <form-screen-services v-else-if="currentScreenIndex === 2" />
-      <form-screen-budget v-else-if="currentScreenIndex === 3" />
-      <form-screen-success v-else-if="currentScreenIndex === 4" />
+      <form-contacts-screen v-if="currentScreenIndex === 1" />
+      <form-services-screen v-else-if="currentScreenIndex === 2" />
+      <form-budget-screen v-else-if="currentScreenIndex === 3" />
+      <form-success-screen v-else-if="currentScreenIndex === 4" />
 
     </base-container>
 
@@ -48,10 +48,10 @@
 <script>
 import { computed } from 'vue'
 import StepIndicator from '@/components/step-indicator/StepIndicator.vue'
-import FormScreenSuccess from '@/components/form/FormScreenSuccess.vue'
-import FormScreenBudget from '@/components/form/FormScreenBudget.vue'
-import FormScreenServices from '@/components/form/FormScreenServices.vue'
-import FormScreenContacts from '@/components/form/FormScreenContacts.vue'
+import FormSuccessScreen from '@/components/form/FormSuccessScreen.vue'
+import FormBudgetScreen from '@/components/form/FormBudgetScreen.vue'
+import FormServicesScreen from '@/components/form/FormServicesScreen.vue'
+import FormContactsScreen from '@/components/form/FormContactsScreen.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, email, minLength } from '@vuelidate/validators'
@@ -59,10 +59,10 @@ import { required, helpers, email, minLength } from '@vuelidate/validators'
 export default {
   components: {
     StepIndicator,
-    FormScreenSuccess,
-    FormScreenBudget,
-    FormScreenServices,
-    FormScreenContacts
+    FormSuccessScreen,
+    FormBudgetScreen,
+    FormServicesScreen,
+    FormContactsScreen
   },
   setup() {
     return { v$: useVuelidate() }
