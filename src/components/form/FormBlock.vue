@@ -10,25 +10,6 @@
     <base-container>
       <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT" />
 
-      <!-- <div v-if="currentScreenIndex === 1" class="form__screen screen screen--inputs">
-        <h2 class="screen__caption">
-          Contact details
-        </h2>
-        <p class="screen__sub">
-          Please enter your contacts data.
-        </p>
-        <div class="screen__wrapper">
-          <base-input type="text" placeholder="Name" label="Name" iconSrc="icons/name-icon.svg" :errors="v$.name.$errors"
-            v-model="name" @blur="v$.name.$touch()" />
-          <base-input type="email" placeholder="Email" label="Email" iconSrc="icons/email-icon.svg"
-            :errors="v$.email.$errors" v-model="email" @blur="v$.email.$touch()" />
-          <base-input type="text" placeholder="Phone" label="Phone" iconSrc="icons/phone-icon.svg"
-            maskValue="{+7} (000) 000-00-00" :errors="v$.phone.$errors" v-model="phone" @blur="v$.phone.$touch()" />
-          <base-input type="text" placeholder="Company" label="Company" v-model="company"
-            iconSrc="icons/company-icon.svg" />
-        </div>
-      </div> -->
-
       <form-contacts-screen v-if="currentScreenIndex === 1" />
       <form-services-screen v-else-if="currentScreenIndex === 2" />
       <form-budget-screen v-else-if="currentScreenIndex === 3" />
@@ -273,85 +254,6 @@ export default {
   }
 }
 
-.screen {
-  position: relative;
-
-  &__wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 45px 30px;
-    margin: 0 auto;
-  }
-
-  &__caption {
-    font-size: 24px;
-    line-height: 35px;
-
-    margin: 0 0 8px;
-  }
-
-  &__sub {
-    font-size: 18px;
-    line-height: 30px;
-    color: var(--sub-text-color);
-
-    margin: 0 0 35px;
-  }
-
-  &--success {
-    text-align: center;
-  }
-
-  &__success-text {
-    font-size: 12px;
-    line-height: 120%;
-    color: var(--sub-text-color);
-
-    width: 100%;
-    margin-top: 10px;
-
-    display: none;
-  }
-
-  &--success-submitted .screen__success-text {
-    display: block;
-  }
-
-  &__icon-success {
-    margin: 0 auto 18px;
-  }
-}
-
-@media (max-width: 768px) {
-  .screen {
-    &__wrapper {
-      grid-template-columns: 1fr;
-      gap: 30px 20px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    &__caption {
-      font-size: 18px;
-      line-height: 30px;
-      margin: 0 0 8px;
-    }
-
-    &__sub {
-      font-size: 16px;
-      line-height: 20px;
-      color: var(--sub-text-color);
-
-      margin: 0 0 25px;
-    }
-
-    &__icon-success {
-      width: 100px;
-      height: auto;
-      margin: 0 auto 15px;
-    }
-  }
-}
 
 .buttons {
   display: flex;
