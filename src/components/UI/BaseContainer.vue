@@ -6,6 +6,7 @@
 
 <style scoped>
 .container {
+  overflow: hidden;
   border-radius: 34px;
   border: 1px solid var(--border-color);
   background: var(--alt-theme-color);

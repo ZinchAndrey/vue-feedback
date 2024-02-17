@@ -10,10 +10,12 @@
     <base-container>
       <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT" />
 
-      <form-contacts-screen v-if="currentScreenIndex === 1" />
-      <form-services-screen v-else-if="currentScreenIndex === 2" />
-      <form-budget-screen v-else-if="currentScreenIndex === 3" />
-      <form-success-screen v-else-if="currentScreenIndex === 4" />
+      <transition :name="isStraightDirection ? 'slide' : 'slide--back'" mode="out-in">
+        <form-contacts-screen v-if="currentScreenIndex === 1" />
+        <form-services-screen v-else-if="currentScreenIndex === 2" />
+        <form-budget-screen v-else-if="currentScreenIndex === 3" />
+        <form-success-screen v-else-if="currentScreenIndex === 4" />
+      </transition>
 
     </base-container>
 
@@ -113,7 +115,8 @@ export default {
         },
       ],
 
-      isSubmitted: false
+      isSubmitted: false,
+      isStraightDirection: true,
     }
   },
   provide() {
@@ -176,10 +179,12 @@ export default {
 
       // Это чтобы на след экране не было ошибок сразу при показе 
       this.v$.$reset();
+      this.isStraightDirection = true;
       this.currentScreenIndex += 1;
     },
     setPrevScreen() {
       if (this.currentScreenIndex > 1) {
+        this.isStraightDirection = false;
         this.currentScreenIndex -= 1;
       }
     },
@@ -273,5 +278,40 @@ export default {
   &--right {
     margin: 0 0 0 auto;
   }
+}
+
+/* SLIDE */
+.slide-enter-to,
+.slide-leave-from,
+.slide--back-enter-to,
+.slide--back-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(300px);
+}
+.slide--back-enter-from {
+  opacity: 0;
+  transform: translateX(-300px);
+}
+
+.slide-leave-to {
+  opacity: 1;
+  transform: translateX(-300px);
+}
+.slide--back-leave-to {
+  opacity: 1;
+  transform: translateX(300px);
+}
+
+.slide-enter-active,
+.slide-leave-active,
+.slide--back-enter-active,
+.slide--back-leave-active {
+  transition: all 0.3s ease-in;
 }
 </style>
