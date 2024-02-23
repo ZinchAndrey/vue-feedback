@@ -35,7 +35,6 @@ export default {
       },
     }
   },
-  // inject: ['budgetItems', 'selectedBudget', 'updateSelectedBudget', 'validationGroups'],
   inject: ['budgetItems', 'updateSelectedBudget', 'updateCurrentScreenValidity', 'selectedBudget'],
   data () {
     return {

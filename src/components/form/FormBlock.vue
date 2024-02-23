@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 3,
+      currentScreenIndex: 2,
 
       name: '',
       email: '',
