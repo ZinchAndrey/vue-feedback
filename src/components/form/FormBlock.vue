@@ -11,10 +11,10 @@
       <step-indicator :currentStep="currentScreenIndex" :stepsCount="SCREENS_COUNT" />
 
       <transition :name="isStraightDirection ? 'slide' : 'slide--back'" mode="out-in">
-        <form-contacts-screen v-if="currentScreenIndex === 1" />
-        <form-services-screen v-else-if="currentScreenIndex === 2" />
-        <form-budget-screen v-else-if="currentScreenIndex === 3" />
-        <form-success-screen v-else-if="currentScreenIndex === 4" />
+        <form-contacts-screen v-if="currentScreenIndex === 1" data-screen="contactsScreen" ref="contactsScreen"/>
+        <form-services-screen v-else-if="currentScreenIndex === 2" data-screen="servicesScreen" ref="servicesScreen"/>
+        <form-budget-screen v-else-if="currentScreenIndex === 3" data-screen="budgetScreen" ref="budgetScreen"/>
+        <form-success-screen v-else-if="currentScreenIndex === 4" data-screen="successScreen" ref="successScreen"/>
       </transition>
 
     </base-container>
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 1,
+      currentScreenIndex: 3,
 
       name: '',
       email: '',
@@ -117,6 +117,7 @@ export default {
 
       isSubmitted: false,
       isStraightDirection: true,
+      isCurrentScreenValid: false,
     }
   },
   provide() {
@@ -130,6 +131,8 @@ export default {
       selectedServiceItems: computed(() => this.selectedServiceItems),
       updateSelectedServices: this.updateSelectedServices,
       
+      updateCurrentScreenValidity: this.updateCurrentScreenValidity,
+
       name: computed(() => this.name),
       email: computed(() => this.email),
       phone: computed(() => this.phone),
@@ -172,15 +175,33 @@ export default {
   },
   methods: {
     setNextScreen() {
-      this.v$.$touch();
-      if (!this.isValid) {
+      const currentScreenNode = document.querySelector('[data-screen]');
+      const currentScreenName = currentScreenNode && currentScreenNode.dataset.screen;
+
+      if (!currentScreenName) {
         return;
       }
 
-      // Это чтобы на след экране не было ошибок сразу при показе 
-      this.v$.$reset();
+      this.$refs[currentScreenName].checkValidity();
+
+      // console.log(this.selectedBudget);
+      if (!this.isCurrentScreenValid) {
+        return;
+      }
+
       this.isStraightDirection = true;
       this.currentScreenIndex += 1;
+      this.isCurrentScreenValid = false;
+
+      // this.v$.$touch();
+      // if (!this.isValid) {
+      //   return;
+      // }
+
+      // // Это чтобы на след экране не было ошибок сразу при показе 
+      // this.v$.$reset();
+      // this.isStraightDirection = true;
+      // this.currentScreenIndex += 1;
     },
     setPrevScreen() {
       if (this.currentScreenIndex > 1) {
@@ -196,6 +217,9 @@ export default {
     },
     updateFieldValue(value, field) {
       this[field] = value;
+    },
+    updateCurrentScreenValidity(value) {
+      this.isCurrentScreenValid = value;
     },
     vTouchForm(valueName) {
       this.v$[valueName] && this.v$[valueName].$touch();
@@ -292,20 +316,20 @@ export default {
 
 .slide-enter-from {
   opacity: 0;
-  transform: translateX(300px);
+  transform: translateX(500px);
 }
 .slide--back-enter-from {
   opacity: 0;
-  transform: translateX(-300px);
+  transform: translateX(-500px);
 }
 
 .slide-leave-to {
   opacity: 1;
-  transform: translateX(-300px);
+  transform: translateX(-500px);
 }
 .slide--back-leave-to {
   opacity: 1;
-  transform: translateX(300px);
+  transform: translateX(500px);
 }
 
 .slide-enter-active,
