@@ -13,7 +13,7 @@
         label="Name"
         iconSrc="icons/name-icon.svg"
         fieldName="name"
-        :error="validationGroups.contacts.$errors.find(item => item.$property === 'name')"
+        :error="v$.$errors.find(item => item.$property === 'name')"
         :modelValue="name"
         @update:modelValue="setCurrentFieldValue"
         @blur="validateField" />
@@ -23,7 +23,7 @@
         label="Email"
         iconSrc="icons/email-icon.svg"
         fieldName="email"
-        :error="validationGroups.contacts.$errors.find(item => item.$property === 'email')"
+        :error="v$.$errors.find(item => item.$property === 'email')"
         :modelValue="email"
         @update:modelValue="setCurrentFieldValue"
         @blur="validateField" />
@@ -36,7 +36,7 @@
         iconSrc="icons/phone-icon.svg"
         fieldName="phone"
         maskValue="{+7} (000) 000-00-00"
-        :error="validationGroups.contacts.$errors.find(item => item.$property === 'phone')"
+        :error="v$.$errors.find(item => item.$property === 'phone')"
         :modelValue="phone"
         @update:modelValue="setCurrentFieldValue"
         @blur="validateField" />
@@ -54,14 +54,65 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required, helpers, email, minLength } from '@vuelidate/validators'
+
 export default {
-  inject: ['name', 'email', 'phone', 'company', 'validationGroups', 'updateFieldValue', 'vTouchForm'],
+  setup() {
+    return { v$: useVuelidate() }
+  },
+  validations() {
+    return {
+      name: { required: helpers.withMessage('Enter your name', required) },
+      email: {
+        required: helpers.withMessage('Enter your email', required),
+        email: helpers.withMessage('Enter email in a correct format', email),
+        $lazy: true
+      },
+      phone: {
+        required: helpers.withMessage('Enter your phone number', required),
+        minLength: helpers.withMessage('Phone number should be in a specified format', minLength(18))
+      }
+    }
+  },
+  // inject: ['name', 'email', 'phone', 'company', 'validationGroups', 'updateFieldValue', 'vTouchForm'],
+  // inject: ['name', 'email', 'phone', 'company'],
+  inject: [ 'userName', 'userEmail', 'userPhone', 'userCompany', 'updateCurrentScreenValidity', 'updateUserFieldValue'],
+  data() {
+    return {
+      name: this.userName,
+      email: this.userEmail,
+      phone: this.userPhone,
+      company: this.userCompany
+    }
+  },
+  computed: {
+    isValid() {
+      return !this.v$.$invalid;
+    }
+  },
   methods: {
+    updateFieldValue(value, field) {
+      this[field] = value;
+    },
     setCurrentFieldValue(value, name) {
       this.updateFieldValue(value, name)
     },
     validateField(evt) {
-      this.vTouchForm(evt.target.name)
+      this.v$[evt.target.name] && this.v$[evt.target.name].$touch();
+    },
+    checkValidity() {
+      this.v$.$touch();
+
+      if (!this.isValid) {
+        return;
+      }
+
+      this.updateUserFieldValue(this.name, 'name');
+      this.updateUserFieldValue(this.email, 'email');
+      this.updateUserFieldValue(this.phone, 'phone');
+      this.updateUserFieldValue(this.company, 'company');
+      this.updateCurrentScreenValidity(this.isValid);
     }
   }
 }

@@ -51,12 +51,10 @@ export default {
   },
   methods: {
     setCurrentServices(value) {
-      console.log(value);
       this.checkedItems = value;
       this.v$.$touch();
     },
     checkValidity() {
-      console.log('test');
       this.v$.$touch();
 
       if (!this.isValid) {

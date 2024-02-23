@@ -52,7 +52,6 @@ export default {
       this.v$.$touch();
     },
     checkValidity() {
-      console.log('test');
       this.v$.$touch();
 
       if (!this.isValid) {

@@ -36,9 +36,6 @@ import FormBudgetScreen from '@/components/form/FormBudgetScreen.vue'
 import FormServicesScreen from '@/components/form/FormServicesScreen.vue'
 import FormContactsScreen from '@/components/form/FormContactsScreen.vue'
 
-import { useVuelidate } from '@vuelidate/core'
-import { required, helpers, email, minLength } from '@vuelidate/validators'
-
 export default {
   components: {
     StepIndicator,
@@ -47,13 +44,10 @@ export default {
     FormServicesScreen,
     FormContactsScreen
   },
-  setup() {
-    return { v$: useVuelidate() }
-  },
   data() {
     return {
       SCREENS_COUNT: 4,
-      currentScreenIndex: 2,
+      currentScreenIndex: 1,
 
       name: '',
       email: '',
@@ -133,44 +127,11 @@ export default {
       
       updateCurrentScreenValidity: this.updateCurrentScreenValidity,
 
-      name: computed(() => this.name),
-      email: computed(() => this.email),
-      phone: computed(() => this.phone),
-      company: computed(() => this.company),
-      updateFieldValue: this.updateFieldValue,
-      vTouchForm: this.vTouchForm,
-    }
-  },
-  computed: {
-    isValid() {
-      return !(this.currentScreenIndex === 1 && this.v$.$validationGroups.contacts.$invalid)
-        && !(this.currentScreenIndex === 2 && this.v$.$validationGroups.services.$invalid)
-        && !(this.currentScreenIndex === 3 && this.v$.$validationGroups.budget.$invalid);
-    },
-  },
-  validations() {
-    return {
-      name: { required: helpers.withMessage('Enter your name', required) },
-      email: {
-        required: helpers.withMessage('Enter your email', required),
-        email: helpers.withMessage('Enter email in a correct format', email),
-        $lazy: true
-      },
-      phone: {
-        required: helpers.withMessage('Enter your phone number', required),
-        minLength: helpers.withMessage('Phone number should be in a specified format', minLength(18))
-      },
-      selectedServiceItems: {
-        required: helpers.withMessage('Select at least one item', required),
-      },
-      selectedBudget: {
-        required: helpers.withMessage('Select your budget', required),
-      },
-      $validationGroups: {
-        contacts: ['name', 'email', 'phone'],
-        services: ['selectedServiceItems'],
-        budget: ['selectedBudget']
-      }
+      userName: computed(() => this.name),
+      userEmail: computed(() => this.email),
+      userPhone: computed(() => this.phone),
+      userCompany: computed(() => this.company),
+      updateUserFieldValue: this.updateUserFieldValue,
     }
   },
   methods: {
@@ -184,7 +145,6 @@ export default {
 
       this.$refs[currentScreenName].checkValidity();
 
-      // console.log(this.selectedBudget);
       if (!this.isCurrentScreenValid) {
         return;
       }
@@ -192,16 +152,6 @@ export default {
       this.isStraightDirection = true;
       this.currentScreenIndex += 1;
       this.isCurrentScreenValid = false;
-
-      // this.v$.$touch();
-      // if (!this.isValid) {
-      //   return;
-      // }
-
-      // // Это чтобы на след экране не было ошибок сразу при показе 
-      // this.v$.$reset();
-      // this.isStraightDirection = true;
-      // this.currentScreenIndex += 1;
     },
     setPrevScreen() {
       if (this.currentScreenIndex > 1) {
@@ -215,14 +165,11 @@ export default {
     updateSelectedServices(value) {
       this.selectedServiceItems = value;
     },
-    updateFieldValue(value, field) {
+    updateUserFieldValue(value, field) {
       this[field] = value;
     },
     updateCurrentScreenValidity(value) {
       this.isCurrentScreenValid = value;
-    },
-    vTouchForm(valueName) {
-      this.v$[valueName] && this.v$[valueName].$touch();
     },
     submitForm() {
       const userData = {
