@@ -2,12 +2,6 @@
 ---
 Ссылка на build [здесь](https://zinchandrey.github.io/feedback-vue-app/)
 
-## Questions 2.0
-
-По проекту
-
-5. Перенес валидацию внутрь экранов формы.
-
 ## Project Setup
 
 ```sh
